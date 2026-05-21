@@ -1,0 +1,375 @@
+:root {
+  color-scheme: dark;
+  --ink: #f7f0e8;
+  --muted: #c8b9a4;
+  --gold: #d7b46a;
+  --rose: #a63e52;
+  --glass: rgba(22, 17, 20, 0.78);
+  --panel: rgba(10, 12, 18, 0.72);
+  --line: rgba(255, 235, 196, 0.24);
+  font-family: "Hiragino Sans", "PingFang SC", "Noto Sans SC", system-ui, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+  background: #08070a;
+  color: var(--ink);
+}
+
+button {
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  color: var(--ink);
+  background: rgba(28, 22, 28, 0.78);
+  min-height: 40px;
+  padding: 0 16px;
+  font: inherit;
+  cursor: pointer;
+}
+
+button:hover,
+button:focus-visible {
+  border-color: rgba(215, 180, 106, 0.8);
+  background: rgba(68, 43, 49, 0.86);
+  outline: none;
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.42;
+}
+
+.app,
+.stage,
+.title-screen {
+  position: relative;
+  width: 100vw;
+  height: 100dvh;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.title-screen {
+  display: grid;
+  align-items: end;
+  padding: clamp(24px, 5vw, 72px);
+  background:
+    linear-gradient(90deg, rgba(8, 7, 10, 0.9), rgba(8, 7, 10, 0.32) 56%, rgba(8, 7, 10, 0.2)),
+    url("./assets/backgrounds/throne_hall.png") center / cover no-repeat;
+}
+
+.title-copy {
+  max-width: 680px;
+  padding-bottom: min(10vh, 96px);
+}
+
+.kicker {
+  margin: 0 0 10px;
+  color: var(--gold);
+  letter-spacing: 0;
+  font-size: 14px;
+}
+
+h1 {
+  margin: 0;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(64px, 13vw, 148px);
+  line-height: 0.92;
+  font-weight: 700;
+  text-shadow: 0 12px 40px rgba(0, 0, 0, 0.62);
+}
+
+.subtitle {
+  margin: 16px 0 28px;
+  color: var(--muted);
+  font-size: clamp(18px, 3vw, 28px);
+}
+
+.title-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.title-actions button {
+  min-width: 136px;
+  background: rgba(80, 31, 45, 0.82);
+}
+
+.background,
+.tone-overlay {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.background {
+  object-fit: cover;
+  transition: opacity 480ms ease, transform 1200ms ease;
+}
+
+.tone-overlay {
+  pointer-events: none;
+  background:
+    linear-gradient(180deg, rgba(6, 7, 12, 0.1), rgba(6, 7, 12, 0.26) 48%, rgba(6, 7, 12, 0.72)),
+    radial-gradient(circle at 74% 24%, rgba(215, 180, 106, 0.12), transparent 34%);
+}
+
+.character {
+  position: absolute;
+  left: 50%;
+  bottom: 8vh;
+  max-height: 86vh;
+  max-width: min(62vw, 720px);
+  transform: translateX(-50%);
+  object-fit: contain;
+  filter: drop-shadow(0 22px 28px rgba(0, 0, 0, 0.58));
+  transition: opacity 280ms ease, transform 280ms ease;
+}
+
+.character.cat {
+  left: 28%;
+  bottom: 20vh;
+  max-height: 38vh;
+  max-width: min(30vw, 340px);
+}
+
+.stage.has-choices .character.cat {
+  left: 19%;
+  bottom: 50vh;
+  max-height: 27vh;
+}
+
+.hud,
+.topbar {
+  position: absolute;
+  top: max(16px, env(safe-area-inset-top));
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.hud {
+  left: max(18px, env(safe-area-inset-left));
+  padding: 10px 14px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: rgba(7, 8, 12, 0.54);
+  color: var(--muted);
+  font-size: 13px;
+  backdrop-filter: blur(10px);
+}
+
+.hud span:first-child {
+  color: var(--gold);
+}
+
+.topbar {
+  right: max(18px, env(safe-area-inset-right));
+}
+
+.topbar button {
+  min-width: 64px;
+  min-height: 34px;
+  padding: 0 10px;
+  font-size: 13px;
+  background: rgba(7, 8, 12, 0.5);
+  backdrop-filter: blur(10px);
+}
+
+.dialogue {
+  position: absolute;
+  left: max(24px, env(safe-area-inset-left));
+  right: max(24px, env(safe-area-inset-right));
+  bottom: max(22px, env(safe-area-inset-bottom));
+  z-index: 6;
+  min-height: 172px;
+  padding: 22px 28px 24px;
+  border: 1px solid rgba(255, 235, 196, 0.28);
+  border-radius: 8px;
+  background: linear-gradient(180deg, rgba(25, 20, 24, 0.84), rgba(8, 9, 13, 0.86));
+  box-shadow: 0 20px 80px rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(16px);
+}
+
+.dialogue p {
+  margin: 14px 0 0;
+  max-width: 1060px;
+  font-size: clamp(18px, 2.1vw, 25px);
+  line-height: 1.72;
+}
+
+.nameplate {
+  display: inline-flex;
+  align-items: center;
+  min-width: 104px;
+  min-height: 30px;
+  padding: 0 12px;
+  border-left: 3px solid var(--gold);
+  color: var(--gold);
+  background: rgba(150, 49, 67, 0.18);
+  font-weight: 700;
+}
+
+#next-mark {
+  position: absolute;
+  right: 24px;
+  bottom: 14px;
+  color: rgba(247, 240, 232, 0.58);
+  font-size: 12px;
+}
+
+.choice-panel {
+  position: absolute;
+  z-index: 7;
+  left: 50%;
+  bottom: 222px;
+  width: min(840px, calc(100vw - 48px));
+  transform: translateX(-50%);
+  display: grid;
+  gap: 10px;
+}
+
+.choice-panel button {
+  min-height: 54px;
+  padding: 12px 18px;
+  text-align: left;
+  background: rgba(37, 27, 34, 0.88);
+  backdrop-filter: blur(14px);
+}
+
+.choice-panel small {
+  display: block;
+  margin-top: 4px;
+  color: var(--muted);
+}
+
+dialog {
+  width: min(680px, calc(100vw - 32px));
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 0;
+  color: var(--ink);
+  background: rgba(14, 15, 20, 0.96);
+  box-shadow: 0 24px 90px rgba(0, 0, 0, 0.56);
+}
+
+dialog::backdrop {
+  background: rgba(0, 0, 0, 0.58);
+}
+
+dialog form > header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 18px;
+  border-bottom: 1px solid var(--line);
+}
+
+dialog header button {
+  min-width: 36px;
+  min-height: 36px;
+  padding: 0;
+}
+
+#modal-body {
+  max-height: min(68vh, 640px);
+  overflow: auto;
+  padding: 18px;
+  line-height: 1.7;
+}
+
+.history-line {
+  margin-bottom: 14px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.history-line strong {
+  color: var(--gold);
+}
+
+.settings-row {
+  display: grid;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+input[type="range"] {
+  width: 100%;
+}
+
+@media (max-width: 720px) {
+  .title-screen {
+    padding: 22px;
+    background-position: 58% center;
+  }
+
+  .hud {
+    left: 12px;
+    right: 12px;
+    justify-content: space-between;
+    font-size: 12px;
+  }
+
+  .topbar {
+    top: 62px;
+    left: 12px;
+    right: 12px;
+    justify-content: space-between;
+  }
+
+  .topbar button {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .character {
+    max-width: 92vw;
+    max-height: 74vh;
+    bottom: 15vh;
+  }
+
+  .character.cat {
+    left: 34%;
+    max-width: 48vw;
+    bottom: 24vh;
+  }
+
+  .stage.has-choices .character.cat {
+    left: 22%;
+    bottom: 52vh;
+    max-height: 22vh;
+    max-width: 42vw;
+  }
+
+  .dialogue {
+    left: 10px;
+    right: 10px;
+    bottom: 10px;
+    min-height: 158px;
+    padding: 16px 18px 24px;
+  }
+
+  .dialogue p {
+    font-size: 17px;
+    line-height: 1.62;
+  }
+
+  .choice-panel {
+    width: calc(100vw - 20px);
+    bottom: 188px;
+  }
+}
