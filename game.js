@@ -10,6 +10,15 @@ const assets = {
     cat: "./assets/characters/antalia_cat.png",
     antalia: "./assets/characters/antalia.png",
   },
+  cg: {
+    catIntro: "./assets/cg/antalia_cat_intro.png",
+    humanReveal: "./assets/cg/antalia_human_reveal.png",
+  },
+  music: {
+    goldberg: "./assets/music/goldberg_aria.ogg",
+    gymnopedie: "./assets/music/gymnopedie_no1.ogg",
+    toccata: "./assets/music/toccata_bwv565.ogg",
+  },
 };
 
 const initialStats = {
@@ -29,6 +38,12 @@ const story = {
   general_gift: {
     speaker: "大将军",
     text: "陛下！臣在猫族王宫废墟中寻得此物。布偶猫族最后的王室血脉，特献于陛下。",
+    next: "cat_intro_cg",
+  },
+  cat_intro_cg: {
+    cg: "catIntro",
+    speaker: "旁白",
+    text: "笼门后的蓝眼睛抬了起来。那不是宠物看主人的眼神，而是亡国王女隔着金丝笼，第一次审判她的新敌人。",
     next: "cat_reveal",
   },
   cat_reveal: {
@@ -447,6 +462,12 @@ const story = {
   magic_wall: {
     speaker: "旁白",
     text: "王宫深处的死胡同前，幽蓝色术式一条接一条熄灭。月光照在猫的身上，然后皮毛褪去，少女的身影缓缓成形。",
+    next: "human_reveal_cg",
+  },
+  human_reveal_cg: {
+    cg: "humanReveal",
+    speaker: "旁白",
+    text: "月光像银色王冠落在她发间。塞德里克终于看见安塔莉亚真正的样子，也看见她拼命藏住的孤独与骄傲。",
     next: "human_reveal",
   },
   human_reveal: {
@@ -636,6 +657,7 @@ const dom = {
   start: document.querySelector("#start-game"),
   continue: document.querySelector("#continue-game"),
   bg: document.querySelector("#background"),
+  cg: document.querySelector("#event-cg"),
   character: document.querySelector("#character"),
   chapter: document.querySelector("#chapter-label"),
   stats: document.querySelector("#stats-label"),
@@ -655,11 +677,11 @@ const dom = {
 const storeKey = "soft-paws-save-v1";
 const settingsKey = "soft-paws-settings-v1";
 const musicMoods = {
-  throne: { root: 98, notes: [1, 1.25, 1.5, 2], color: "sawtooth" },
-  bed: { root: 130.81, notes: [1, 1.2, 1.5, 2], color: "triangle" },
-  council: { root: 110, notes: [1, 1.33, 1.5, 2], color: "sawtooth" },
-  entrance: { root: 146.83, notes: [1, 1.125, 1.5, 2.25], color: "sine" },
-  library: { root: 92.5, notes: [1, 1.2, 1.414, 2], color: "triangle" },
+  throne: "goldberg",
+  bed: "gymnopedie",
+  council: "goldberg",
+  entrance: "toccata",
+  library: "toccata",
 };
 
 let state = {
@@ -677,8 +699,8 @@ let textTimer = null;
 let settings = loadSettings();
 let audio = {
   ctx: null,
-  master: null,
-  nodes: [],
+  tracks: {},
+  current: null,
   mood: null,
 };
 
@@ -695,7 +717,7 @@ function saveSettings() {
 }
 
 function preload() {
-  [...Object.values(assets.backgrounds), ...Object.values(assets.characters)].forEach((src) => {
+  [...Object.values(assets.backgrounds), ...Object.values(assets.characters), ...Object.values(assets.cg)].forEach((src) => {
     const image = new Image();
     image.src = src;
   });
@@ -703,38 +725,40 @@ function preload() {
 
 function initAudio() {
   if (settings.music <= 0) return;
+  if (!Object.keys(audio.tracks).length) {
+    for (const [key, src] of Object.entries(assets.music)) {
+      const track = new Audio(src);
+      track.loop = true;
+      track.preload = "auto";
+      track.volume = 0;
+      audio.tracks[key] = track;
+    }
+  }
   if (!audio.ctx) {
     const AudioContext = window.AudioContext || window.webkitAudioContext;
-    if (!AudioContext) return;
-    audio.ctx = new AudioContext();
-    audio.master = audio.ctx.createGain();
-    audio.master.gain.value = settings.music;
-    audio.master.connect(audio.ctx.destination);
+    if (AudioContext) audio.ctx = new AudioContext();
   }
-  if (audio.ctx.state === "suspended") audio.ctx.resume();
+  if (audio.ctx?.state === "suspended") audio.ctx.resume();
 }
 
 function stopMood() {
-  for (const node of audio.nodes) {
-    try {
-      node.gain.gain.cancelScheduledValues(audio.ctx.currentTime);
-      node.gain.gain.linearRampToValueAtTime(0, audio.ctx.currentTime + 0.35);
-      node.osc.stop(audio.ctx.currentTime + 0.4);
-      if (node.lfo) node.lfo.stop(audio.ctx.currentTime + 0.4);
-    } catch {}
+  if (audio.current) {
+    audio.current.pause();
+    audio.current.currentTime = 0;
+    audio.current.volume = 0;
   }
-  audio.nodes = [];
+  audio.current = null;
 }
 
 function setMusicVolume(value) {
   settings.music = value;
   saveSettings();
-  if (audio.master) audio.master.gain.value = value;
   if (value <= 0) {
     stopMood();
     audio.mood = null;
   } else {
     initAudio();
+    if (audio.current) audio.current.volume = value;
     if (state.currentBg) startMood(state.currentBg);
   }
 }
@@ -742,48 +766,35 @@ function setMusicVolume(value) {
 function startMood(mood) {
   if (settings.music <= 0 || !musicMoods[mood]) return;
   initAudio();
-  if (!audio.ctx || audio.mood === mood) return;
-  stopMood();
+  if (audio.mood === mood) return;
+  const nextTrack = audio.tracks[musicMoods[mood]];
+  if (!nextTrack) return;
+  if (audio.current && audio.current !== nextTrack) {
+    audio.current.pause();
+    audio.current.currentTime = 0;
+    audio.current.volume = 0;
+  }
   audio.mood = mood;
-  const preset = musicMoods[mood];
-  const now = audio.ctx.currentTime;
-  audio.nodes = preset.notes.map((ratio, index) => {
-    const osc = audio.ctx.createOscillator();
-    const gain = audio.ctx.createGain();
-    const filter = audio.ctx.createBiquadFilter();
-    const lfo = audio.ctx.createOscillator();
-    const lfoGain = audio.ctx.createGain();
-    osc.type = preset.color;
-    osc.frequency.value = preset.root * ratio;
-    filter.type = "lowpass";
-    filter.frequency.value = 520 + index * 90;
-    gain.gain.value = 0;
-    gain.gain.linearRampToValueAtTime(0.015 + index * 0.004, now + 0.8);
-    lfo.frequency.value = 0.05 + index * 0.018;
-    lfoGain.gain.value = 4 + index * 2;
-    lfo.connect(lfoGain);
-    lfoGain.connect(osc.detune);
-    osc.connect(filter);
-    filter.connect(gain);
-    gain.connect(audio.master);
-    osc.start(now);
-    lfo.start(now);
-    return { osc, gain, lfo };
-  });
+  audio.current = nextTrack;
+  audio.current.volume = settings.music;
+  audio.current.play().catch(() => {});
 }
 
 function playUiTone(kind = "next") {
-  if (settings.music <= 0 || !audio.ctx || !audio.master) return;
+  if (settings.music <= 0 || !audio.ctx) return;
   const now = audio.ctx.currentTime;
   const osc = audio.ctx.createOscillator();
   const gain = audio.ctx.createGain();
+  const master = audio.ctx.createGain();
+  master.gain.value = 0.35;
+  master.connect(audio.ctx.destination);
   osc.type = "sine";
   osc.frequency.value = kind === "choice" ? 740 : 520;
   gain.gain.setValueAtTime(0, now);
   gain.gain.linearRampToValueAtTime(0.035, now + 0.01);
   gain.gain.exponentialRampToValueAtTime(0.001, now + 0.18);
   osc.connect(gain);
-  gain.connect(audio.master);
+  gain.connect(master);
   osc.start(now);
   osc.stop(now + 0.2);
 }
@@ -844,6 +855,17 @@ function renderNode() {
       dom.character.src = assets.characters[node.sprite];
       dom.character.className = `character ${node.sprite === "cat" ? "cat" : ""}`;
     }
+  }
+  if (Object.hasOwn(node, "cg")) {
+    if (!node.cg) {
+      dom.cg.classList.add("hidden");
+    } else {
+      dom.cg.src = assets.cg[node.cg];
+      dom.cg.classList.remove("hidden");
+      dom.character.classList.add("hidden");
+    }
+  } else if (!node.choices) {
+    dom.cg.classList.add("hidden");
   }
 
   updateStats();

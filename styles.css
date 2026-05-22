@@ -119,6 +119,16 @@ h1 {
   transition: opacity 480ms ease, transform 1200ms ease;
 }
 
+.event-cg {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity 420ms ease;
+}
+
 .tone-overlay {
   pointer-events: none;
   background:
@@ -128,6 +138,7 @@ h1 {
 
 .character {
   position: absolute;
+  z-index: 3;
   left: 50%;
   bottom: 8vh;
   max-height: 86vh;
