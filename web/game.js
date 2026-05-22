@@ -870,11 +870,11 @@ function renderNode() {
       dom.cgStage.className = `cg-stage ${node.cgMotion ?? node.cg}`;
       dom.cg.style.animation = "none";
       dom.cgEffects.style.animation = "none";
-      for (const part of dom.cgLive.querySelectorAll(".cg-part")) part.style.animation = "none";
+      for (const part of dom.cgLive.querySelectorAll(".cg-part, .cg-shot")) part.style.animation = "none";
       void dom.cg.offsetWidth;
       dom.cg.style.animation = "";
       dom.cgEffects.style.animation = "";
-      for (const part of dom.cgLive.querySelectorAll(".cg-part")) part.style.animation = "";
+      for (const part of dom.cgLive.querySelectorAll(".cg-part, .cg-shot")) part.style.animation = "";
       dom.character.classList.add("hidden");
     }
   } else if (!node.choices) {

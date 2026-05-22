@@ -138,7 +138,8 @@ h1 {
 }
 
 .cg-live,
-.cg-part {
+.cg-part,
+.cg-shot {
   position: absolute;
   inset: 0;
   pointer-events: none;
@@ -148,9 +149,11 @@ h1 {
   z-index: 1;
 }
 
-.cg-part {
+.cg-part,
+.cg-shot {
   background-image: var(--cg-image);
   background-position: var(--cg-position, center);
+  background-repeat: no-repeat;
   background-size: cover;
   opacity: 0;
   transform-origin: center;
@@ -167,35 +170,61 @@ h1 {
 }
 
 .cg-stage.catIntro .event-cg {
-  animation: cat-cg-camera 8s ease-out both;
+  animation: cat-anime-camera 6.2s cubic-bezier(0.16, 0.8, 0.2, 1) both;
+}
+
+.cg-stage.catIntro .cat-eye-cutin {
+  inset: 9% 7% auto auto;
+  width: min(48vw, 620px);
+  height: min(24vh, 230px);
+  border: 1px solid rgba(255, 222, 150, 0.5);
+  border-radius: 2px;
+  background-position: 60% 36%;
+  background-size: 250%;
+  box-shadow: 0 18px 42px rgba(0, 0, 0, 0.45);
+  clip-path: polygon(8% 0, 100% 0, 92% 100%, 0 100%);
+  opacity: 0;
+  transform-origin: right center;
+  animation: cat-eye-cutin 6.2s cubic-bezier(0.18, 0.82, 0.22, 1) both;
+  filter: brightness(1.18) saturate(1.18) contrast(1.06);
+}
+
+.cg-stage.catIntro .cat-cage-snap {
+  background-image:
+    repeating-linear-gradient(90deg, rgba(235, 184, 83, 0.62) 0 4px, transparent 4px 68px),
+    var(--cg-image);
+  background-blend-mode: screen, normal;
+  clip-path: inset(0);
+  opacity: 0;
+  animation: cat-cage-snap 6.2s ease-out both;
 }
 
 .cg-stage.catIntro .cat-body {
   clip-path: ellipse(18% 30% at 59% 49%);
-  opacity: 0.34;
+  opacity: 0;
   transform-origin: 59% 58%;
-  animation: cat-body-bristle 3.4s ease-in-out infinite;
+  animation: cat-body-acting 6.2s cubic-bezier(0.2, 0.76, 0.22, 1) both;
 }
 
 .cg-stage.catIntro .cat-face {
   clip-path: ellipse(8% 10% at 59% 36%);
-  opacity: 0.55;
+  opacity: 0;
   transform-origin: 59% 39%;
-  animation: cat-face-defiance 4.2s ease-in-out infinite;
+  animation: cat-face-acting 6.2s cubic-bezier(0.2, 0.84, 0.22, 1) both;
 }
 
 .cg-stage.catIntro .cat-tail {
   clip-path: ellipse(11% 8% at 67% 62%);
-  opacity: 0.52;
+  opacity: 0;
   transform-origin: 59% 60%;
-  animation: cat-tail-flick 2.9s ease-in-out infinite;
+  animation: cat-tail-acting 6.2s ease-in-out both;
 }
 
 .cg-stage.catIntro .cat-paw {
   clip-path: polygon(50% 60%, 61% 61%, 64% 74%, 49% 75%);
-  opacity: 0.28;
+  opacity: 0;
   transform-origin: 56% 66%;
-  animation: cat-paw-tense 3.1s ease-in-out infinite;
+  animation: cat-paw-acting 6.2s ease-in-out both;
 }
 
 .cg-stage.catIntro .cg-effects {
@@ -204,44 +233,68 @@ h1 {
     radial-gradient(circle at 61% 42%, rgba(108, 177, 255, 0.26), transparent 10%),
     linear-gradient(100deg, transparent 0 42%, rgba(255, 232, 173, 0.26) 49%, transparent 56% 100%);
   mix-blend-mode: screen;
-  animation: cage-glint 4.8s ease-in-out infinite;
+  animation: cat-action-light 6.2s ease-out both;
 }
 
 .cg-stage.catIntro .cg-effects::after {
   background: radial-gradient(circle at 58% 40%, rgba(126, 186, 255, 0.38), transparent 8%);
-  animation: eye-pulse 2.6s ease-in-out infinite;
+  animation: cat-eye-impact 6.2s ease-out both;
 }
 
 .cg-stage.humanReveal .event-cg {
-  animation: human-cg-camera 9s ease-out both;
+  animation: human-anime-camera 7s cubic-bezier(0.16, 0.8, 0.2, 1) both;
+}
+
+.cg-stage.humanReveal .human-silhouette {
+  clip-path: polygon(30% 0, 58% 0, 68% 82%, 32% 82%);
+  opacity: 0;
+  transform-origin: 45% 43%;
+  filter: brightness(0.3) saturate(0.7) blur(1px);
+  animation: human-silhouette-reveal 7s cubic-bezier(0.18, 0.82, 0.22, 1) both;
+}
+
+.cg-stage.humanReveal .human-close {
+  inset: 8% auto auto 8%;
+  width: min(34vw, 440px);
+  height: min(52vh, 520px);
+  border: 1px solid rgba(196, 228, 255, 0.46);
+  border-radius: 2px;
+  background-position: 43% 24%;
+  background-size: 190%;
+  box-shadow: 0 22px 56px rgba(0, 0, 0, 0.48);
+  clip-path: polygon(0 0, 92% 0, 100% 100%, 8% 100%);
+  opacity: 0;
+  transform-origin: left center;
+  filter: brightness(1.14) saturate(1.08);
+  animation: human-close-cutin 7s cubic-bezier(0.18, 0.82, 0.22, 1) both;
 }
 
 .cg-stage.humanReveal .human-head {
   clip-path: ellipse(9% 12% at 45% 20%);
-  opacity: 0.2;
+  opacity: 0;
   transform-origin: 45% 26%;
-  animation: human-head-turn 5.8s ease-in-out infinite;
+  animation: human-head-acting 7s cubic-bezier(0.2, 0.84, 0.22, 1) both;
 }
 
 .cg-stage.humanReveal .human-hair {
   clip-path: polygon(39% 7%, 54% 8%, 58% 55%, 48% 70%, 36% 51%);
-  opacity: 0.28;
+  opacity: 0;
   transform-origin: 45% 24%;
-  animation: human-hair-breath 4.8s ease-in-out infinite;
+  animation: human-hair-acting 7s ease-in-out both;
 }
 
 .cg-stage.humanReveal .human-hand {
   clip-path: ellipse(8% 11% at 36% 35%);
-  opacity: 0.18;
+  opacity: 0;
   transform-origin: 37% 41%;
-  animation: human-hand-guard 4.2s ease-in-out infinite;
+  animation: human-hand-acting 7s cubic-bezier(0.2, 0.84, 0.22, 1) both;
 }
 
 .cg-stage.humanReveal .human-tail {
   clip-path: ellipse(12% 9% at 60% 62%);
-  opacity: 0.32;
+  opacity: 0;
   transform-origin: 51% 58%;
-  animation: human-tail-alert 3.8s ease-in-out infinite;
+  animation: human-tail-acting 7s ease-in-out both;
 }
 
 .cg-stage.humanReveal .cg-effects {
@@ -249,7 +302,7 @@ h1 {
     radial-gradient(circle at 53% 6%, rgba(202, 231, 255, 0.42), transparent 15%),
     linear-gradient(118deg, transparent 0 34%, rgba(173, 216, 255, 0.24) 46%, transparent 60% 100%);
   mix-blend-mode: screen;
-  animation: moonbeam-sway 5.6s ease-in-out infinite;
+  animation: human-moon-action 7s ease-out both;
 }
 
 .cg-stage.humanReveal .cg-effects::before {
@@ -258,7 +311,7 @@ h1 {
     radial-gradient(circle at 64% 54%, rgba(180, 221, 255, 0.2) 0 1px, transparent 2px),
     radial-gradient(circle at 38% 62%, rgba(114, 177, 255, 0.16) 0 1px, transparent 2px);
   background-size: 84px 84px, 116px 116px, 142px 142px;
-  animation: rune-dust 7s linear infinite;
+  animation: rune-action 7s ease-out both;
 }
 
 @media (max-width: 720px) {
@@ -284,6 +337,316 @@ h1 {
 
   .cg-stage.catIntro .cat-paw {
     clip-path: polygon(52% 60%, 80% 61%, 85% 75%, 50% 75%);
+  }
+}
+
+@keyframes cat-anime-camera {
+  0% {
+    filter: brightness(0.44) saturate(0.82);
+    transform: scale(1.42) translate3d(16%, -7%, 0);
+  }
+  14% {
+    filter: brightness(1.18) saturate(1.14);
+    transform: scale(1.62) translate3d(17%, -8%, 0);
+  }
+  22% {
+    filter: brightness(0.84) saturate(0.96);
+    transform: scale(1.18) translate3d(2%, -1%, 0);
+  }
+  42% {
+    filter: brightness(1.08) saturate(1.06);
+    transform: scale(1.11) translate3d(1.8%, -0.6%, 0);
+  }
+  100% {
+    filter: brightness(1) saturate(1.03);
+    transform: scale(1.14) translate3d(1%, -0.4%, 0);
+  }
+}
+
+@keyframes cat-eye-cutin {
+  0%, 4% {
+    opacity: 0;
+    transform: translate3d(18%, -3%, 0) skewX(-6deg) scale(0.94);
+  }
+  7%, 17% {
+    opacity: 0.92;
+    transform: translate3d(0, 0, 0) skewX(-6deg) scale(1);
+  }
+  20% {
+    opacity: 0;
+    transform: translate3d(-10%, 2%, 0) skewX(-6deg) scale(1.04);
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes cat-cage-snap {
+  0%, 16%, 100% {
+    opacity: 0;
+    transform: translateX(-14%);
+  }
+  18% {
+    opacity: 0.62;
+    transform: translateX(-5%);
+  }
+  24% {
+    opacity: 0.18;
+    transform: translateX(5%);
+  }
+}
+
+@keyframes cat-body-acting {
+  0%, 18% {
+    opacity: 0;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  24% {
+    opacity: 0.34;
+    transform: translate3d(-0.9%, 0.4%, 0) scale(0.985);
+  }
+  38% {
+    opacity: 0.28;
+    transform: translate3d(0.5%, -0.42%, 0) scale(1.028);
+  }
+  58%, 100% {
+    opacity: 0.18;
+    transform: translate3d(0, 0, 0) scale(1.004);
+  }
+}
+
+@keyframes cat-face-acting {
+  0%, 20% {
+    opacity: 0;
+    transform: translate3d(0, 0.8%, 0) rotate(0.9deg) scale(0.96);
+  }
+  28% {
+    opacity: 0.4;
+    filter: brightness(1.24) saturate(1.12);
+    transform: translate3d(0.68%, -0.48%, 0) rotate(-1.8deg) scale(1.06);
+  }
+  40% {
+    opacity: 0.26;
+    transform: translate3d(-0.22%, 0.12%, 0) rotate(0.45deg) scale(1.018);
+  }
+  100% {
+    opacity: 0.16;
+    transform: translate3d(0, 0, 0) rotate(0deg) scale(1);
+  }
+}
+
+@keyframes cat-tail-acting {
+  0%, 30% {
+    opacity: 0;
+    transform: rotate(0deg) translate3d(0, 0, 0) scale(1);
+  }
+  38% {
+    opacity: 0.42;
+    transform: rotate(-7deg) translate3d(-1.2%, 0.2%, 0) scale(1.04);
+  }
+  48% {
+    opacity: 0.36;
+    transform: rotate(8deg) translate3d(1.4%, -0.18%, 0) scale(1.055);
+  }
+  66%, 100% {
+    opacity: 0.22;
+    transform: rotate(-0.8deg) translate3d(0, 0, 0) scale(1.01);
+  }
+}
+
+@keyframes cat-paw-acting {
+  0%, 40% {
+    opacity: 0;
+    transform: translate3d(0, 0.7%, 0) rotate(0deg);
+  }
+  50% {
+    opacity: 0.46;
+    transform: translate3d(0.2%, -0.76%, 0) rotate(-1.3deg);
+  }
+  68%, 100% {
+    opacity: 0.22;
+    transform: translate3d(0, -0.1%, 0) rotate(-0.2deg);
+  }
+}
+
+@keyframes cat-action-light {
+  0%, 12%, 100% {
+    opacity: 0.22;
+    transform: translateX(-20%);
+  }
+  18% {
+    opacity: 0.88;
+    transform: translateX(8%);
+  }
+  36% {
+    opacity: 0.42;
+    transform: translateX(18%);
+  }
+}
+
+@keyframes cat-eye-impact {
+  0%, 20%, 100% {
+    opacity: 0;
+  }
+  28% {
+    opacity: 0.72;
+  }
+  46% {
+    opacity: 0.24;
+  }
+}
+
+@keyframes human-anime-camera {
+  0% {
+    filter: brightness(0.22) saturate(0.8) blur(1.5px);
+    transform: scale(1.32) translate3d(7%, 1%, 0);
+  }
+  18% {
+    filter: brightness(0.58) saturate(0.9) blur(0.5px);
+    transform: scale(1.24) translate3d(4%, 0, 0);
+  }
+  30% {
+    filter: brightness(1.38) saturate(1.14);
+    transform: scale(1.16) translate3d(-0.8%, -0.6%, 0);
+  }
+  46% {
+    filter: brightness(0.92) saturate(1);
+    transform: scale(1.2) translate3d(-2.6%, -1.1%, 0);
+  }
+  100% {
+    filter: brightness(1.02) saturate(1.03);
+    transform: scale(1.15) translate3d(-1.3%, -0.8%, 0);
+  }
+}
+
+@keyframes human-silhouette-reveal {
+  0%, 5% {
+    opacity: 0;
+    transform: translate3d(4%, 0, 0) scale(1.08);
+  }
+  12%, 25% {
+    opacity: 0.58;
+    transform: translate3d(1%, -0.2%, 0) scale(1.03);
+  }
+  34% {
+    opacity: 0;
+    transform: translate3d(-0.6%, -0.4%, 0) scale(1);
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes human-close-cutin {
+  0%, 28% {
+    opacity: 0;
+    transform: translate3d(-18%, 2%, 0) skewX(5deg) scale(0.96);
+  }
+  34%, 42% {
+    opacity: 0.82;
+    transform: translate3d(0, 0, 0) skewX(5deg) scale(1);
+  }
+  48%, 100% {
+    opacity: 0;
+  }
+}
+
+@keyframes human-head-acting {
+  0%, 30% {
+    opacity: 0;
+    transform: translate3d(0.7%, 0.3%, 0) rotate(1.4deg) scale(0.98);
+  }
+  40% {
+    opacity: 0.38;
+    filter: brightness(1.2) saturate(1.08);
+    transform: translate3d(-0.34%, -0.22%, 0) rotate(-0.92deg) scale(1.018);
+  }
+  62%, 100% {
+    opacity: 0.18;
+    transform: translate3d(0, 0, 0) rotate(0deg) scale(1);
+  }
+}
+
+@keyframes human-hair-acting {
+  0%, 32% {
+    opacity: 0;
+    transform: translate3d(0.8%, 0, 0) rotate(1deg) scale(0.99);
+  }
+  44% {
+    opacity: 0.46;
+    transform: translate3d(-0.36%, -0.28%, 0) rotate(-0.8deg) scale(1.018);
+  }
+  72%, 100% {
+    opacity: 0.22;
+    transform: translate3d(0, 0, 0) rotate(0.08deg) scale(1);
+  }
+}
+
+@keyframes human-hand-acting {
+  0%, 35% {
+    opacity: 0;
+    transform: translate3d(-0.4%, 0.7%, 0) rotate(1.6deg);
+  }
+  47% {
+    opacity: 0.32;
+    transform: translate3d(0.16%, -0.52%, 0) rotate(-1.2deg);
+  }
+  68%, 100% {
+    opacity: 0.14;
+    transform: translate3d(0, -0.08%, 0) rotate(-0.1deg);
+  }
+}
+
+@keyframes human-tail-acting {
+  0%, 40% {
+    opacity: 0;
+    transform: rotate(0deg) translate3d(0, 0, 0);
+  }
+  52% {
+    opacity: 0.46;
+    transform: rotate(5.4deg) translate3d(0.82%, -0.18%, 0);
+  }
+  66% {
+    opacity: 0.34;
+    transform: rotate(-3.6deg) translate3d(-0.52%, 0.1%, 0);
+  }
+  100% {
+    opacity: 0.22;
+    transform: rotate(0deg) translate3d(0, 0, 0);
+  }
+}
+
+@keyframes human-moon-action {
+  0%, 12% {
+    opacity: 0;
+    transform: translateX(-8%);
+  }
+  28% {
+    opacity: 0.9;
+    transform: translateX(0);
+  }
+  54% {
+    opacity: 0.46;
+    transform: translateX(3%);
+  }
+  100% {
+    opacity: 0.34;
+    transform: translateX(0);
+  }
+}
+
+@keyframes rune-action {
+  0%, 18% {
+    opacity: 0;
+    transform: translate3d(0, 8%, 0) scale(0.98);
+  }
+  36% {
+    opacity: 0.64;
+    transform: translate3d(0, -2%, 0) scale(1.04);
+  }
+  100% {
+    opacity: 0.28;
+    transform: translate3d(0, -7%, 0) scale(1);
   }
 }
 
