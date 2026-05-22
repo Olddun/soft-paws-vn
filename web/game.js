@@ -42,6 +42,7 @@ const story = {
   },
   cat_intro_cg: {
     cg: "catIntro",
+    cgMotion: "catIntro",
     speaker: "旁白",
     text: "笼门后的蓝眼睛抬了起来。那不是宠物看主人的眼神，而是亡国王女隔着金丝笼，第一次审判她的新敌人。",
     next: "cat_reveal",
@@ -466,6 +467,7 @@ const story = {
   },
   human_reveal_cg: {
     cg: "humanReveal",
+    cgMotion: "humanReveal",
     speaker: "旁白",
     text: "月光像银色王冠落在她发间。塞德里克终于看见安塔莉亚真正的样子，也看见她拼命藏住的孤独与骄傲。",
     next: "human_reveal",
@@ -657,7 +659,9 @@ const dom = {
   start: document.querySelector("#start-game"),
   continue: document.querySelector("#continue-game"),
   bg: document.querySelector("#background"),
+  cgStage: document.querySelector("#cg-stage"),
   cg: document.querySelector("#event-cg"),
+  cgEffects: document.querySelector("#cg-effects"),
   character: document.querySelector("#character"),
   chapter: document.querySelector("#chapter-label"),
   stats: document.querySelector("#stats-label"),
@@ -858,14 +862,19 @@ function renderNode() {
   }
   if (Object.hasOwn(node, "cg")) {
     if (!node.cg) {
-      dom.cg.classList.add("hidden");
+      dom.cgStage.classList.add("hidden");
     } else {
       dom.cg.src = assets.cg[node.cg];
-      dom.cg.classList.remove("hidden");
+      dom.cgStage.className = `cg-stage ${node.cgMotion ?? node.cg}`;
+      dom.cg.style.animation = "none";
+      dom.cgEffects.style.animation = "none";
+      void dom.cg.offsetWidth;
+      dom.cg.style.animation = "";
+      dom.cgEffects.style.animation = "";
       dom.character.classList.add("hidden");
     }
   } else if (!node.choices) {
-    dom.cg.classList.add("hidden");
+    dom.cgStage.classList.add("hidden");
   }
 
   updateStats();

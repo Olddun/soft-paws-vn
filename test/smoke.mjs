@@ -36,6 +36,12 @@ if (missingNodes.length) {
   throw new Error(`Missing required story nodes: ${missingNodes.join(", ")}`);
 }
 
+for (const id of ["cat_intro_cg", "human_reveal_cg"]) {
+  if (!story[id]?.cg || !story[id]?.cgMotion) {
+    throw new Error(`Key appearance node is missing animated CG metadata: ${id}`);
+  }
+}
+
 let firstChoiceDepth = 0;
 let cursor = "start";
 while (story[cursor] && !story[cursor].choices) {
