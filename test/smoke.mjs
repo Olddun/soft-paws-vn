@@ -61,6 +61,8 @@ import { fileURLToPath } from "node:url";
 const assetPaths = [
   ...Object.values(assets.backgrounds),
   ...Object.values(assets.characters),
+  ...Object.values(assets.cg),
+  ...Object.values(assets.music),
 ].map((src) => new URL(`../web/${src.replace("./", "")}`, import.meta.url));
 
 for (const url of assetPaths) {

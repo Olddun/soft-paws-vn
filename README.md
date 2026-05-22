@@ -5,6 +5,7 @@
 - `web/`：可直接托管的网页试玩版
 - `renpy/game/script.rpy`：Ren'Py 源脚本
 - `web/assets/`：本次生成并落地的背景和立绘资产
+- `CREDITS.md`：音乐和生成资产来源说明
 
 本地运行：
 

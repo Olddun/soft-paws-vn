@@ -20,6 +20,8 @@ image bg entrance = "assets/backgrounds/forbidden_entrance.png"
 image bg library = "assets/backgrounds/forbidden_library.png"
 image antalia = "assets/characters/antalia.png"
 image antalia_cat = "assets/characters/antalia_cat.png"
+image cg antalia_cat_intro = "assets/cg/antalia_cat_intro.png"
+image cg antalia_human_reveal = "assets/cg/antalia_human_reveal.png"
 
 label start:
     scene bg throne
@@ -27,6 +29,9 @@ label start:
     # play music throne fadein 1.0
     "圣历一七四年，灭国战争结束后的第三十日。北境大将军凯旋而归，献上的不是敌国国王的首级，而是一只笼子。"
     g "陛下！臣在猫族王宫废墟中寻得此物。布偶猫族最后的王室血脉，特献于陛下。"
+    scene cg antalia_cat_intro
+    "笼门后的蓝眼睛抬了起来。那不是宠物看主人的眼神，而是亡国王女隔着金丝笼，第一次审判她的新敌人。"
+    scene bg throne
     show antalia_cat
     "金丝笼被抬上殿来。笼中蜷缩着一只布偶猫，蓝宝石般的眼睛藏在蓬松浅杏色长毛下。"
     c "长得倒是不错。可惜是只不能化人的兽族。养着玩吧。"
@@ -104,6 +109,9 @@ label start:
     hide antalia_cat
     "月圆之夜，猫窝里只剩一团被精心整理过的毯子。"
     "王宫深处的死胡同前，幽蓝色术式一条接一条熄灭。"
+    scene cg antalia_human_reveal
+    "月光像银色王冠落在她发间。塞德里克终于看见安塔莉亚真正的样子，也看见她拼命藏住的孤独与骄傲。"
+    scene bg entrance
     show antalia
     "月光照在猫的身上，然后皮毛褪去，少女的身影缓缓成形。"
     a "破。"
