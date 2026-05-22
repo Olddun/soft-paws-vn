@@ -661,6 +661,7 @@ const dom = {
   bg: document.querySelector("#background"),
   cgStage: document.querySelector("#cg-stage"),
   cg: document.querySelector("#event-cg"),
+  cgLive: document.querySelector("#cg-live"),
   cgEffects: document.querySelector("#cg-effects"),
   character: document.querySelector("#character"),
   chapter: document.querySelector("#chapter-label"),
@@ -865,12 +866,15 @@ function renderNode() {
       dom.cgStage.classList.add("hidden");
     } else {
       dom.cg.src = assets.cg[node.cg];
+      dom.cgStage.style.setProperty("--cg-image", `url("${assets.cg[node.cg]}")`);
       dom.cgStage.className = `cg-stage ${node.cgMotion ?? node.cg}`;
       dom.cg.style.animation = "none";
       dom.cgEffects.style.animation = "none";
+      for (const part of dom.cgLive.querySelectorAll(".cg-part")) part.style.animation = "none";
       void dom.cg.offsetWidth;
       dom.cg.style.animation = "";
       dom.cgEffects.style.animation = "";
+      for (const part of dom.cgLive.querySelectorAll(".cg-part")) part.style.animation = "";
       dom.character.classList.add("hidden");
     }
   } else if (!node.choices) {

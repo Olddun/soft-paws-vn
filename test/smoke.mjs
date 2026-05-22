@@ -5,6 +5,9 @@ const makeElement = () => ({
   appendChild() {},
   classList: classList(),
   close() {},
+  querySelectorAll() {
+    return [];
+  },
   showModal() {},
   style: {},
 });
@@ -61,7 +64,7 @@ if (textChars < 3800) {
   throw new Error(`Story text is too thin for the requested playable act: ${textChars} chars`);
 }
 
-import { access } from "node:fs/promises";
+import { access, readFile } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
 
 const assetPaths = [
@@ -73,6 +76,27 @@ const assetPaths = [
 
 for (const url of assetPaths) {
   await access(fileURLToPath(url));
+}
+
+const indexHtml = await readFile(new URL("../web/index.html", import.meta.url), "utf8");
+const stylesCss = await readFile(new URL("../web/styles.css", import.meta.url), "utf8");
+for (const token of [
+  "cat-body",
+  "cat-face",
+  "cat-tail",
+  "cat-paw",
+  "human-head",
+  "human-hair",
+  "human-hand",
+  "human-tail",
+  "cat-face-defiance",
+  "cat-tail-flick",
+  "human-head-turn",
+  "human-hand-guard",
+]) {
+  if (!indexHtml.includes(token) && !stylesCss.includes(token)) {
+    throw new Error(`Missing live CG animation token: ${token}`);
+  }
 }
 
 const visited = new Set();
