@@ -5,11 +5,19 @@ const makeElement = () => ({
   appendChild() {},
   classList: classList(),
   close() {},
+  dataset: {},
+  src: "",
+  getAttribute(name) {
+    return this[name] ?? "";
+  },
   querySelectorAll() {
     return [];
   },
+  querySelector() {
+    return null;
+  },
   showModal() {},
-  style: {},
+  style: { setProperty() {} },
 });
 
 globalThis.document = {
@@ -31,7 +39,7 @@ globalThis.localStorage = {
 };
 globalThis.Image = class Image {};
 
-const { assets, initialStats, story } = await import("../web/game.js");
+const { assets, initialStats, speakerActors, story, storySections } = await import("../web/game.js");
 
 const requiredNodes = ["start", "choice_throne", "choice_morning", "choice_library", "ending"];
 const missingNodes = requiredNodes.filter((id) => !story[id]);
@@ -43,6 +51,15 @@ for (const id of ["cat_intro_cg", "human_reveal_cg"]) {
   if (!story[id]?.cg || !story[id]?.cgMotion) {
     throw new Error(`Key appearance node is missing animated CG metadata: ${id}`);
   }
+}
+
+const namedSpeakers = new Set(
+  Object.values(story)
+    .map((node) => node.speaker)
+    .filter((speaker) => speaker && !["旁白", "系统"].includes(speaker)),
+);
+for (const speaker of namedSpeakers) {
+  if (!speakerActors[speaker]) throw new Error(`Named speaker lacks portrait mapping: ${speaker}`);
 }
 
 let firstChoiceDepth = 0;
@@ -69,7 +86,7 @@ import { fileURLToPath } from "node:url";
 
 const assetPaths = [
   ...Object.values(assets.backgrounds),
-  ...Object.values(assets.characters),
+  ...Object.values(assets.characters).flatMap((expressions) => Object.values(expressions)),
   ...Object.values(assets.cg),
   ...Object.values(assets.music),
 ].map((src) => new URL(`../web/${src.replace("./", "")}`, import.meta.url));
@@ -81,27 +98,55 @@ for (const url of assetPaths) {
 const indexHtml = await readFile(new URL("../web/index.html", import.meta.url), "utf8");
 const stylesCss = await readFile(new URL("../web/styles.css", import.meta.url), "utf8");
 for (const token of [
-  "cat-body",
-  "cat-face",
-  "cat-tail",
-  "cat-paw",
-  "cat-eye-cutin",
-  "cat-cage-snap",
-  "human-head",
-  "human-hair",
-  "human-hand",
-  "human-tail",
-  "human-silhouette",
-  "human-close",
-  "cat-anime-camera",
-  "cat-face-acting",
-  "cat-tail-acting",
-  "human-anime-camera",
-  "human-head-acting",
-  "human-hand-acting",
+  "cast-layer",
+  "portrait",
+  "portrait-label",
+  "speaking",
+  "grayscale",
 ]) {
   if (!indexHtml.includes(token) && !stylesCss.includes(token)) {
-    throw new Error(`Missing live CG animation token: ${token}`);
+    throw new Error(`Missing cast display token: ${token}`);
+  }
+}
+
+for (const [actor, expressions] of Object.entries(assets.characters)) {
+  if (Object.keys(expressions).length < 3) {
+    throw new Error(`Character lacks expression variants: ${actor}`);
+  }
+}
+
+for (const token of [
+  "cg-live",
+  "cg-shot",
+  "cg-part",
+  "cat-body",
+  "cat-face",
+  "human-head",
+  "human-hair",
+  "background-image: var(--cg-image)",
+]) {
+  if (indexHtml.includes(token) || stylesCss.includes(token)) {
+    throw new Error(`CG stage still contains duplicate/partial image layer token: ${token}`);
+  }
+}
+
+if (/不是.{0,18}而是|不是|而是/.test(JSON.stringify(story))) {
+  throw new Error("Story still contains the banned not-this-but-that phrasing pattern");
+}
+
+if (/innerHTML\s*=.*hint|<small>/.test(await readFile(new URL("../web/game.js", import.meta.url), "utf8"))) {
+  throw new Error("Choice buttons still expose explanatory hint text");
+}
+
+const gameJs = await readFile(new URL("../web/game.js", import.meta.url), "utf8");
+if (!gameJs.includes('(node.speaker ?? "旁白") === "旁白"') || !gameJs.includes('dom.speaker.classList.add("hidden")')) {
+  throw new Error("Narration no longer has a protected no-nameplate branch");
+}
+
+for (const [section, cgs] of Object.entries(storySections)) {
+  if (new Set(cgs).size < 3) throw new Error(`Section lacks at least 3 unique CGs: ${section}`);
+  for (const cg of cgs) {
+    if (!assets.cg[cg]) throw new Error(`Section references missing CG asset: ${section} -> ${cg}`);
   }
 }
 
@@ -122,6 +167,26 @@ while (stack.length) {
 
 if (!visited.has("ending")) {
   throw new Error("Ending is unreachable");
+}
+
+const reachableCgs = new Set([...visited].flatMap((id) => (story[id].cg ? [story[id].cg] : [])));
+for (const [cg] of Object.entries(assets.cg)) {
+  if (!reachableCgs.has(cg)) throw new Error(`CG asset is not reachable in story: ${cg}`);
+}
+for (const [section, cgs] of Object.entries(storySections)) {
+  const missingReachable = cgs.filter((cg) => !reachableCgs.has(cg));
+  if (missingReachable.length) {
+    throw new Error(`Section CGs are not reachable: ${section} -> ${missingReachable.join(", ")}`);
+  }
+}
+
+for (const [id, node] of Object.entries(story)) {
+  for (const choice of node.choices ?? []) {
+    if (choice.label.length > 4) throw new Error(`Choice label is not short enough at ${id}: ${choice.label}`);
+    if (/[+-]|亲近|警戒|观察|因为|所以|底线|选择/.test(choice.label)) {
+      throw new Error(`Choice label exposes mechanics/reasoning at ${id}: ${choice.label}`);
+    }
+  }
 }
 
 if (visited.size < 100) {
