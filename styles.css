@@ -132,8 +132,29 @@ h1 {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: var(--cg-position, center);
   opacity: 1;
   transform-origin: center;
+}
+
+.cg-live,
+.cg-part {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.cg-live {
+  z-index: 1;
+}
+
+.cg-part {
+  background-image: var(--cg-image);
+  background-position: var(--cg-position, center);
+  background-size: cover;
+  opacity: 0;
+  transform-origin: center;
+  will-change: clip-path, filter, opacity, transform;
 }
 
 .cg-effects,
@@ -147,6 +168,34 @@ h1 {
 
 .cg-stage.catIntro .event-cg {
   animation: cat-cg-camera 8s ease-out both;
+}
+
+.cg-stage.catIntro .cat-body {
+  clip-path: ellipse(18% 30% at 59% 49%);
+  opacity: 0.34;
+  transform-origin: 59% 58%;
+  animation: cat-body-bristle 3.4s ease-in-out infinite;
+}
+
+.cg-stage.catIntro .cat-face {
+  clip-path: ellipse(8% 10% at 59% 36%);
+  opacity: 0.55;
+  transform-origin: 59% 39%;
+  animation: cat-face-defiance 4.2s ease-in-out infinite;
+}
+
+.cg-stage.catIntro .cat-tail {
+  clip-path: ellipse(11% 8% at 67% 62%);
+  opacity: 0.52;
+  transform-origin: 59% 60%;
+  animation: cat-tail-flick 2.9s ease-in-out infinite;
+}
+
+.cg-stage.catIntro .cat-paw {
+  clip-path: polygon(50% 60%, 61% 61%, 64% 74%, 49% 75%);
+  opacity: 0.28;
+  transform-origin: 56% 66%;
+  animation: cat-paw-tense 3.1s ease-in-out infinite;
 }
 
 .cg-stage.catIntro .cg-effects {
@@ -167,6 +216,34 @@ h1 {
   animation: human-cg-camera 9s ease-out both;
 }
 
+.cg-stage.humanReveal .human-head {
+  clip-path: ellipse(9% 12% at 45% 20%);
+  opacity: 0.2;
+  transform-origin: 45% 26%;
+  animation: human-head-turn 5.8s ease-in-out infinite;
+}
+
+.cg-stage.humanReveal .human-hair {
+  clip-path: polygon(39% 7%, 54% 8%, 58% 55%, 48% 70%, 36% 51%);
+  opacity: 0.28;
+  transform-origin: 45% 24%;
+  animation: human-hair-breath 4.8s ease-in-out infinite;
+}
+
+.cg-stage.humanReveal .human-hand {
+  clip-path: ellipse(8% 11% at 36% 35%);
+  opacity: 0.18;
+  transform-origin: 37% 41%;
+  animation: human-hand-guard 4.2s ease-in-out infinite;
+}
+
+.cg-stage.humanReveal .human-tail {
+  clip-path: ellipse(12% 9% at 60% 62%);
+  opacity: 0.32;
+  transform-origin: 51% 58%;
+  animation: human-tail-alert 3.8s ease-in-out infinite;
+}
+
 .cg-stage.humanReveal .cg-effects {
   background:
     radial-gradient(circle at 53% 6%, rgba(202, 231, 255, 0.42), transparent 15%),
@@ -182,6 +259,32 @@ h1 {
     radial-gradient(circle at 38% 62%, rgba(114, 177, 255, 0.16) 0 1px, transparent 2px);
   background-size: 84px 84px, 116px 116px, 142px 142px;
   animation: rune-dust 7s linear infinite;
+}
+
+@media (max-width: 720px) {
+  .cg-stage.catIntro {
+    --cg-position: 76% center;
+  }
+
+  .cg-stage.humanReveal {
+    --cg-position: 44% center;
+  }
+
+  .cg-stage.catIntro .cat-body {
+    clip-path: ellipse(30% 27% at 70% 48%);
+  }
+
+  .cg-stage.catIntro .cat-face {
+    clip-path: ellipse(18% 11% at 72% 35%);
+  }
+
+  .cg-stage.catIntro .cat-tail {
+    clip-path: ellipse(26% 8% at 75% 64%);
+  }
+
+  .cg-stage.catIntro .cat-paw {
+    clip-path: polygon(52% 60%, 80% 61%, 85% 75%, 50% 75%);
+  }
 }
 
 @keyframes cat-cg-camera {
@@ -220,6 +323,58 @@ h1 {
   }
 }
 
+@keyframes cat-body-bristle {
+  0%, 100% {
+    filter: brightness(1) contrast(1);
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  38% {
+    filter: brightness(1.08) contrast(1.04);
+    transform: translate3d(0.25%, -0.25%, 0) scale(1.012);
+  }
+  62% {
+    transform: translate3d(-0.18%, 0.08%, 0) scale(1.006);
+  }
+}
+
+@keyframes cat-face-defiance {
+  0%, 100% {
+    filter: brightness(1.04) saturate(1);
+    transform: translate3d(0, 0, 0) rotate(0deg) scale(1);
+  }
+  42% {
+    filter: brightness(1.18) saturate(1.08);
+    transform: translate3d(0.42%, -0.18%, 0) rotate(-0.7deg) scale(1.025);
+  }
+  70% {
+    transform: translate3d(-0.16%, 0.06%, 0) rotate(0.3deg) scale(1.01);
+  }
+}
+
+@keyframes cat-tail-flick {
+  0%, 100% {
+    transform: rotate(0deg) translate3d(0, 0, 0) scale(1);
+  }
+  28% {
+    transform: rotate(-2.5deg) translate3d(-0.25%, 0.08%, 0) scale(1.012);
+  }
+  52% {
+    transform: rotate(3.6deg) translate3d(0.45%, -0.06%, 0) scale(1.02);
+  }
+  68% {
+    transform: rotate(-1.4deg) translate3d(-0.16%, 0, 0) scale(1.006);
+  }
+}
+
+@keyframes cat-paw-tense {
+  0%, 100% {
+    transform: translate3d(0, 0, 0) rotate(0deg);
+  }
+  45% {
+    transform: translate3d(0.12%, -0.35%, 0) rotate(-0.6deg);
+  }
+}
+
 @keyframes human-cg-camera {
   from {
     transform: scale(1.08) translate3d(1%, 0.6%, 0);
@@ -231,6 +386,56 @@ h1 {
   to {
     transform: scale(1.16) translate3d(-1.4%, -1%, 0);
     filter: brightness(1) saturate(1.02);
+  }
+}
+
+@keyframes human-head-turn {
+  0%, 100% {
+    filter: brightness(1.04) saturate(1);
+    transform: translate3d(0, 0, 0) rotate(0deg) scale(1);
+  }
+  34% {
+    filter: brightness(1.16) saturate(1.05);
+    transform: translate3d(-0.16%, -0.08%, 0) rotate(-0.38deg) scale(1.006);
+  }
+  68% {
+    transform: translate3d(0.08%, 0.03%, 0) rotate(0.12deg) scale(1.002);
+  }
+}
+
+@keyframes human-hair-breath {
+  0%, 100% {
+    transform: translate3d(0, 0, 0) rotate(0deg) scale(1);
+  }
+  45% {
+    transform: translate3d(0.16%, -0.12%, 0) rotate(0.35deg) scale(1.006);
+  }
+  72% {
+    transform: translate3d(-0.08%, 0.04%, 0) rotate(-0.16deg) scale(1.002);
+  }
+}
+
+@keyframes human-hand-guard {
+  0%, 100% {
+    transform: translate3d(0, 0, 0) rotate(0deg);
+  }
+  44% {
+    transform: translate3d(-0.08%, -0.18%, 0) rotate(-0.55deg);
+  }
+  64% {
+    transform: translate3d(0.03%, -0.08%, 0) rotate(-0.2deg);
+  }
+}
+
+@keyframes human-tail-alert {
+  0%, 100% {
+    transform: rotate(0deg) translate3d(0, 0, 0);
+  }
+  30% {
+    transform: rotate(0.9deg) translate3d(0.14%, -0.06%, 0);
+  }
+  58% {
+    transform: rotate(-1.4deg) translate3d(-0.18%, 0.04%, 0);
   }
 }
 
