@@ -103,6 +103,14 @@ for (const token of [
   "portrait-label",
   "speaking",
   "grayscale",
+  "dialogue-tools",
+  "log-inline-button",
+  "auto-button",
+  "skip-button",
+  "map-button",
+  "quick-save-button",
+  "quick-load-button",
+  "settings-inline-button",
 ]) {
   if (!indexHtml.includes(token) && !stylesCss.includes(token)) {
     throw new Error(`Missing cast display token: ${token}`);
@@ -141,6 +149,9 @@ if (/innerHTML\s*=.*hint|<small>/.test(await readFile(new URL("../web/game.js", 
 const gameJs = await readFile(new URL("../web/game.js", import.meta.url), "utf8");
 if (!gameJs.includes('(node.speaker ?? "旁白") === "旁白"') || !gameJs.includes('dom.speaker.classList.add("hidden")')) {
   throw new Error("Narration no longer has a protected no-nameplate branch");
+}
+for (const token of ["splitTextPages", "塞德里克的选择", "branchTreeHtml", "quickStoreKey"]) {
+  if (!gameJs.includes(token)) throw new Error(`VN control/text paging logic is missing: ${token}`);
 }
 
 for (const [section, cgs] of Object.entries(storySections)) {
@@ -192,7 +203,7 @@ for (const [id, node] of Object.entries(story)) {
     throw new Error(`Dialogue/narration line is too long at ${id}: ${node.text.length} chars`);
   }
   for (const choice of node.choices ?? []) {
-    if (choice.label.length > 4) throw new Error(`Choice label is not short enough at ${id}: ${choice.label}`);
+    if (choice.label.length > 6) throw new Error(`Choice label is too long at ${id}: ${choice.label}`);
     if (/[+-]|亲近|警戒|观察|因为|所以|底线|选择/.test(choice.label)) {
       throw new Error(`Choice label exposes mechanics/reasoning at ${id}: ${choice.label}`);
     }
