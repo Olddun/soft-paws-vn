@@ -150,7 +150,7 @@ const gameJs = await readFile(new URL("../web/game.js", import.meta.url), "utf8"
 if (!gameJs.includes('(node.speaker ?? "旁白") === "旁白"') || !gameJs.includes('dom.speaker.classList.add("hidden")')) {
   throw new Error("Narration no longer has a protected no-nameplate branch");
 }
-for (const token of ["splitTextPages", "塞德里克的选择", "branchTreeHtml", "quickStoreKey"]) {
+for (const token of ["splitTextPages", "塞德里克的选择", "branchMapHtml", "branchMap", "choiceLog", "quickStoreKey"]) {
   if (!gameJs.includes(token)) throw new Error(`VN control/text paging logic is missing: ${token}`);
 }
 

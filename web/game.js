@@ -1512,6 +1512,69 @@ const storySections = {
   "终章：政变、破咒与自由": ["infirmaryAftermath", "finalRitual", "sunriseEnding"],
 };
 
+const branchMap = [
+  {
+    id: "choice_throne",
+    chapter: "序章",
+    title: "献礼后的第一眼",
+    prompt: "塞德里克要维持王的冷面，还是承认自己看见了笼中猫的异常。",
+  },
+  {
+    id: "choice_morning",
+    chapter: "第一章",
+    title: "早膳试探",
+    prompt: "他可以靠近、维持体面，或故意逗她露出真实反应。",
+  },
+  {
+    id: "choice_library",
+    chapter: "月圆夜",
+    title: "禁书库对峙",
+    prompt: "真相近在眼前，他选择施压、退让，还是用亲近打破僵局。",
+  },
+  {
+    id: "choice_truce",
+    chapter: "第二章",
+    title: "临时同盟",
+    prompt: "这份同盟可以写成契约，也可以先从伸手开始。",
+  },
+  {
+    id: "ch2_choice_archive",
+    chapter: "第二章",
+    title: "追查旧账",
+    prompt: "线索分成两端：死账册里的证据，和活人口中的证词。",
+  },
+  {
+    id: "ch3_choice_altar",
+    chapter: "第三章",
+    title: "旧王都祭坛",
+    prompt: "记忆正在崩落，塞德里克必须决定先追线索，还是先接住她。",
+  },
+  {
+    id: "ch4_choice_after",
+    chapter: "终章前夜",
+    title: "伤后守候",
+    prompt: "政变之后，亲近和克制都可能是照顾。",
+  },
+  {
+    id: "choice_trial",
+    chapter: "终章",
+    title: "公开审判",
+    prompt: "王座要选择把真相交给众人，还是先保住能说话的人。",
+  },
+  {
+    id: "ch5_choice_end",
+    chapter: "大结局",
+    title: "城门前",
+    prompt: "笼门已经打开，他最后要牵住此刻，或与她并肩走向城外。",
+  },
+  {
+    id: "result",
+    chapter: "大结局",
+    title: "尾声",
+    prompt: "进入结局确认。",
+  },
+];
+
 const dom = {
   title: document.querySelector("#title-screen"),
   stage: document.querySelector("#stage"),
@@ -1610,6 +1673,7 @@ let state = {
   stats: { ...initialStats },
   flags: {},
   history: [],
+  choiceLog: {},
   currentBg: null,
   currentSprite: null,
 };
@@ -1763,6 +1827,7 @@ function startGame(fromSave = false) {
       stats: { ...initialStats },
       flags: {},
       history: [],
+      choiceLog: {},
       currentBg: null,
       currentSprite: null,
     };
@@ -2067,6 +2132,8 @@ function renderChoices(choices) {
       setSkipMode(false);
       initAudio();
       applyEffects(choice);
+      state.choiceLog = state.choiceLog ?? {};
+      state.choiceLog[state.node] = choice.label;
       state.node = choice.next;
       state.history.push({ speaker: "选择", text: choice.label });
       playUiTone("choice");
@@ -2139,6 +2206,7 @@ function loadGame(showToast = true, key = storeKey, title = "已读档") {
     return false;
   }
   state = JSON.parse(raw);
+  state.choiceLog = state.choiceLog ?? {};
   if (showToast) {
     dom.title.classList.add("hidden");
     dom.stage.classList.remove("hidden");
@@ -2191,45 +2259,48 @@ function escapeHtml(value) {
     .replaceAll("'", "&#39;");
 }
 
-function summarizeNode(id) {
-  const node = story[id];
-  if (!node) return id;
-  const chapter = node.chapter ? `${node.chapter} · ` : "";
-  const speaker = node.speaker && node.speaker !== "旁白" ? `${node.speaker}：` : "";
-  const text = node.text ? node.text.slice(0, 26) : "选择";
-  return `${chapter}${speaker}${text}`;
+function branchStatus(id) {
+  if (state.node === id) return "当前";
+  if (state.choiceLog?.[id]) return "已选择";
+  if (readNodes.has(id)) return "已读到";
+  return "未到达";
 }
 
-function firstBranchAfter(id) {
-  let cursor = id;
-  const seen = new Set();
-  while (cursor && story[cursor] && !story[cursor].choices && !seen.has(cursor)) {
-    seen.add(cursor);
-    if (!story[cursor].next) break;
-    cursor = story[cursor].next;
-  }
-  return cursor;
-}
-
-function branchTreeHtml(id = "start", depth = 0, visited = new Set()) {
-  const branchId = firstBranchAfter(id);
-  if (!branchId || !story[branchId] || visited.has(branchId)) return "";
-  visited.add(branchId);
-  const node = story[branchId];
-  const currentClass = branchId === state.node ? " current" : "";
-  const readClass = readNodes.has(branchId) ? " read" : "";
-  const choices = (node.choices ?? [])
-    .map((choice) => {
-      const nextLabel = summarizeNode(choice.next);
-      const child = branchTreeHtml(choice.next, depth + 1, new Set(visited));
-      return `<li><span class="branch-choice">${escapeHtml(choice.label)}</span><span class="branch-next">${escapeHtml(nextLabel)}</span>${child}</li>`;
+function branchMapHtml() {
+  const cards = branchMap
+    .map((entry, index) => {
+      const node = story[entry.id];
+      const selected = state.choiceLog?.[entry.id] ?? "";
+      const status = branchStatus(entry.id);
+      const statusClass = status === "未到达" ? "locked" : status === "当前" ? "current" : "read";
+      const options = (node?.choices ?? [])
+        .map((choice) => {
+          const selectedClass = selected === choice.label ? " selected" : "";
+          return `<span class="branch-option${selectedClass}">${escapeHtml(choice.label)}</span>`;
+        })
+        .join("");
+      const selectedText = selected ? `<p class="branch-picked">本轮选择：${escapeHtml(selected)}</p>` : "";
+      return `<article class="branch-card ${statusClass}">
+        <div class="branch-card-head">
+          <span class="branch-index">${String(index + 1).padStart(2, "0")}</span>
+          <span class="branch-chapter">${escapeHtml(entry.chapter)}</span>
+          <span class="branch-status">${status}</span>
+        </div>
+        <h3>${escapeHtml(entry.title)}</h3>
+        <p>${escapeHtml(entry.prompt)}</p>
+        <div class="branch-options">${options}</div>
+        ${selectedText}
+      </article>`;
     })
     .join("");
-  return `<ol class="branch-level depth-${depth}"><li><div class="branch-node${currentClass}${readClass}">${escapeHtml(summarizeNode(branchId))}</div><ol>${choices}</ol></li></ol>`;
+  return `<div class="branch-map">
+    <p class="branch-intro">你正在扮演塞德里克。这里按剧情顺序回顾关键选择，只保留玩家真正需要判断的路线节点。</p>
+    <div class="branch-cards">${cards}</div>
+  </div>`;
 }
 
 function showBranchMap() {
-  showModal("分支图", `<div class="branch-map">${branchTreeHtml() || "<p>暂无分支。</p>"}</div>`);
+  showModal("路线", branchMapHtml());
 }
 
 function showSettings() {

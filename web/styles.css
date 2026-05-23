@@ -645,55 +645,105 @@ dialog header button {
 
 .branch-map {
   min-width: 0;
+  display: grid;
+  gap: 14px;
 }
 
-.branch-map ol {
-  margin: 8px 0 0 18px;
-  padding: 0;
+.branch-intro {
+  margin: 0;
+  color: rgba(247, 240, 232, 0.78);
+  font-size: 14px;
 }
 
-.branch-map li {
-  margin: 8px 0;
-  padding-left: 8px;
+.branch-cards {
+  display: grid;
+  gap: 10px;
 }
 
-.branch-node,
-.branch-choice,
-.branch-next {
-  display: inline-flex;
-  align-items: center;
-  max-width: 100%;
-  min-height: 28px;
-  border-radius: 4px;
+.branch-card {
+  display: grid;
+  gap: 8px;
+  padding: 12px;
+  border: 1px solid rgba(255, 235, 196, 0.16);
+  border-radius: 6px;
+  background: rgba(7, 8, 12, 0.36);
 }
 
-.branch-node {
-  padding: 5px 9px;
-  border: 1px solid rgba(255, 235, 196, 0.18);
-  color: rgba(247, 240, 232, 0.72);
-  background: rgba(7, 8, 12, 0.42);
-}
-
-.branch-node.read {
-  color: var(--ink);
+.branch-card.read {
   border-color: rgba(215, 180, 106, 0.34);
 }
 
-.branch-node.current {
-  color: var(--gold);
+.branch-card.current {
   border-color: rgba(215, 180, 106, 0.78);
-  background: rgba(88, 54, 35, 0.56);
+  background: rgba(88, 54, 35, 0.5);
 }
 
-.branch-choice {
-  margin-right: 8px;
-  padding: 3px 8px;
+.branch-card.locked {
+  opacity: 0.56;
+}
+
+.branch-card-head,
+.branch-options {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.branch-index,
+.branch-chapter,
+.branch-status,
+.branch-option {
+  display: inline-flex;
+  align-items: center;
+  min-height: 26px;
+  border-radius: 4px;
+  padding: 2px 8px;
+  font-size: 12px;
+}
+
+.branch-index {
   color: var(--gold);
+  background: rgba(215, 180, 106, 0.12);
+}
+
+.branch-chapter {
+  color: rgba(247, 240, 232, 0.72);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.branch-status {
+  margin-left: auto;
+  color: rgba(247, 240, 232, 0.68);
+}
+
+.branch-card h3 {
+  margin: 0;
+  font-size: 17px;
+  line-height: 1.35;
+}
+
+.branch-card p {
+  margin: 0;
+  color: rgba(247, 240, 232, 0.72);
+  line-height: 1.55;
+}
+
+.branch-option {
+  border: 1px solid rgba(255, 235, 196, 0.16);
+  color: rgba(247, 240, 232, 0.78);
   background: rgba(150, 49, 67, 0.18);
 }
 
-.branch-next {
-  color: rgba(247, 240, 232, 0.78);
+.branch-option.selected {
+  border-color: rgba(215, 180, 106, 0.82);
+  color: var(--gold);
+  background: rgba(98, 57, 42, 0.74);
+}
+
+.branch-picked {
+  color: var(--gold) !important;
+  font-weight: 700;
 }
 
 .settings-row {
