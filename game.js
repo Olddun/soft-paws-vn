@@ -61,6 +61,15 @@ const assets = {
     humanReveal: "./assets/cg/antalia_human_reveal.png",
     librarySpellbook: "./assets/cg/library_spellbook.png",
     libraryConfrontation: "./assets/cg/library_confrontation.png",
+    truceLibrary: "./assets/cg/truce_library.png",
+    refugeeCamp: "./assets/cg/refugee_camp.png",
+    archiveLedger: "./assets/cg/archive_ledger.png",
+    oldCapitalRuins: "./assets/cg/old_capital_ruins.png",
+    altarMemory: "./assets/cg/altar_memory.png",
+    palaceCoup: "./assets/cg/palace_coup.png",
+    infirmaryAftermath: "./assets/cg/infirmary_aftermath.png",
+    finalRitual: "./assets/cg/final_ritual.png",
+    sunriseEnding: "./assets/cg/sunrise_ending.png",
   },
   music: {
     goldberg: "./assets/music/goldberg_aria.ogg",
@@ -145,7 +154,12 @@ const story = {
   },
   spare_prisoners: {
     speaker: "塞德里克",
-    text: "俘虏押去北门营地，给药，给热汤。明日让他们修桥。谁敢偷懒，按军法；谁敢私刑，也按军法。死人不会缴税，更不会告诉我猫族王宫那晚究竟少了哪几道术式。",
+    text: "俘虏押去北门营地，给药，给热汤。明日让他们修桥。谁敢偷懒，按军法；谁敢私刑，也按军法。",
+    next: "spare_prisoners_reason",
+  },
+  spare_prisoners_reason: {
+    speaker: "塞德里克",
+    text: "死人不会缴税，也不会告诉我猫族王宫那晚究竟少了哪几道术式。",
     next: "court_reacts",
   },
   court_reacts: {
@@ -298,7 +312,12 @@ const story = {
   },
   cedric_excuse: {
     speaker: "塞德里克",
-    text: "别误会。朕只是讨厌麻烦。战利品病了，御医要写折子，大臣要讲体统，书记官还会用那种眼神看我半天。你若真想报复我，至少先活到能开口骂人的时候。",
+    text: "别误会。朕只是讨厌麻烦。战利品病了，御医要写折子，大臣要讲体统。",
+    next: "cedric_excuse_b",
+  },
+  cedric_excuse_b: {
+    speaker: "塞德里克",
+    text: "你若真想报复我，至少先活到能开口骂人的时候。",
     next: "cat_first_soften",
   },
   cat_first_soften: {
@@ -369,7 +388,12 @@ const story = {
   },
   cedric_save_cat: {
     speaker: "塞德里克",
-    text: "处理？北门营地今天缺一个会抓老鼠的。把它擦干，送过去。再让厨房多煮一锅鱼汤，就说给士兵加餐。若有人问起，告诉他，朕讨厌浪费能活下来的东西。",
+    text: "处理？北门营地今天缺一个会抓老鼠的。把它擦干，送过去。",
+    next: "cedric_save_cat_b",
+  },
+  cedric_save_cat_b: {
+    speaker: "塞德里克",
+    text: "再让厨房多煮一锅鱼汤。若有人问起，告诉他，朕讨厌浪费能活下来的东西。",
     next: "antalia_watches",
   },
   antalia_watches: {
@@ -417,7 +441,12 @@ const story = {
   },
   grain_case: {
     speaker: "大臣",
-    text: "北境雪灾，粮草告急。若要救民，就得从南境抽粮；可南境刚被战火掏空，再抽一次，地方贵族会立刻借题发难。陛下，无论拨不拨粮，都有人等着把罪名写到您头上。",
+    text: "北境雪灾，粮草告急。若要救民，就得从南境抽粮；可南境刚被战火掏空。",
+    next: "grain_case_b",
+  },
+  grain_case_b: {
+    speaker: "大臣",
+    text: "再抽一次，地方贵族会借题发难。陛下，无论拨不拨粮，都有人等着把罪名写到您头上。",
     next: "cedric_hard_choice",
   },
   cedric_hard_choice: {
@@ -434,7 +463,12 @@ const story = {
   },
   cedric_reads_signal: {
     speaker: "塞德里克",
-    text: "北境军走水道。若旧仓还有粮，先救三座城；若没有，就把水道改成撤民路线。传令的人别提这只猫，写成朕临时想起的旧战图，省得你们又浪费半个时辰争论爪印合不合礼法。",
+    text: "北境军走水道。若旧仓还有粮，先救三座城；若没有，就把水道改成撤民路线。",
+    next: "cedric_reads_signal_b",
+  },
+  cedric_reads_signal_b: {
+    speaker: "塞德里克",
+    text: "传令的人别提这只猫。写成朕临时想起的旧战图，省得你们又争爪印合不合礼法。",
     next: "minister_mock",
   },
   minister_mock: {
@@ -491,7 +525,17 @@ const story = {
     cg: "eveningFable",
     cgMotion: "eveningFable",
     speaker: "塞德里克",
-    text: "故事里说，月亮把迷路的猫藏进国王的袖子里。国王起初以为自己捡到宝物，后来才明白，那只猫每天夜里都在替他赶走噩梦。小孩子才信这种结尾，不过老书记官念的时候，我每次都装睡。",
+    text: "故事里说，月亮把迷路的猫藏进国王的袖子里。国王起初以为自己捡到宝物。",
+    next: "cedric_reads_fable_b",
+  },
+  cedric_reads_fable_b: {
+    speaker: "塞德里克",
+    text: "后来他才明白，那只猫每天夜里都在替他赶走噩梦。小孩子才信这种结尾。",
+    next: "cedric_reads_fable_c",
+  },
+  cedric_reads_fable_c: {
+    speaker: "塞德里克",
+    text: "不过老书记官念的时候，我每次都装睡。",
     next: "cat_pretends_sleep",
   },
   cat_pretends_sleep: {
@@ -531,7 +575,12 @@ const story = {
     cg: "moonCorridor",
     cgMotion: "moonCorridor",
     speaker: "塞德里克",
-    text: "我本可以叫卫兵，封死密道，再让宫廷法师把每一块石砖刻上禁制。那样很省事，我也很擅长省事。可她若第二天继续趴在窗台上装睡，我大概会第一次觉得自己赢得很难看。",
+    text: "我本可以叫卫兵，封死密道，再让宫廷法师把每一块石砖刻上禁制。",
+    next: "debate_follow_b",
+  },
+  debate_follow_b: {
+    speaker: "塞德里克",
+    text: "那样很省事，我也很擅长省事。可她若明天继续装睡，我大概会觉得自己赢得很难看。",
     next: "arc_choice_private",
   },
   arc_choice_private: {
@@ -589,7 +638,12 @@ const story = {
     cg: "librarySpellbook",
     cgMotion: "librarySpellbook",
     speaker: "安塔莉亚",
-    text: "父王说过，王室血脉不会无故退化。我醒来时只剩猫的身体，记忆像被剪断的线。若我找不到术式源头，就只能永远听别人用笼子、项圈和食盆定义我是谁。",
+    text: "父王说过，王室血脉不会无故退化。我醒来时只剩猫的身体，记忆像被剪断的线。",
+    next: "antalia_private_goal_b",
+  },
+  antalia_private_goal_b: {
+    speaker: "安塔莉亚",
+    text: "若我找不到术式源头，就只能听别人用笼子、项圈和食盆定义我是谁。",
     next: "cedric_hears_name",
   },
   cedric_hears_name: {
@@ -616,7 +670,12 @@ const story = {
     cg: "libraryConfrontation",
     cgMotion: "libraryConfrontation",
     speaker: "塞德里克",
-    text: "三年来，你每天晚上从我的床上爬起来，变成人，光着脚走到这里，就是为了偷看一本七百年前的旧书？你偷东西的路线倒是谨慎，偏偏忘了石地会留下水痕。",
+    text: "三年来，你每天晚上从我的床上爬起来，变成人，光着脚走到这里。",
+    next: "caught_b",
+  },
+  caught_b: {
+    speaker: "塞德里克",
+    text: "就为了偷看一本七百年前的旧书？路线倒是谨慎，偏偏忘了石地会留下水痕。",
     next: "antalia_startled",
   },
   antalia_startled: {
@@ -646,7 +705,12 @@ const story = {
   },
   cedric_learns: {
     speaker: "塞德里克",
-    text: "话出口的一瞬间，我就知道自己错了。王习惯把真心藏进刀鞘里，说出口时总带着刃。可她今晚没有站在朝堂上，她只是一个光着脚、抱着残页、还在找家的女孩。",
+    text: "话出口的一瞬间，我就知道自己错了。王习惯把真心藏进刀鞘里，说出口时总带着刃。",
+    next: "cedric_learns_b",
+  },
+  cedric_learns_b: {
+    speaker: "塞德里克",
+    text: "可她今晚没有站在朝堂上。她只是光着脚，抱着残页，还在找家的女孩。",
     next: "teaser_reveal",
   },
   teaser_reveal: {
@@ -715,23 +779,726 @@ const story = {
   chapter_end: {
     speaker: "旁白",
     text: "长明灯的火光跳了一下。羊皮纸右下角的小字一闪而过：施术者亦可自我切割。",
+    next: "ch2_dawn",
+  },
+  ch2_dawn: {
+    chapter: "第二章",
+    bg: "library",
+    sprite: "antalia",
+    cg: "truceLibrary",
+    cgMotion: "librarySpellbook",
+    speaker: "旁白",
+    text: "天快亮时，两人还坐在禁书库里。桌上只有一页残卷，一盏冷灯，还有一场谁都不肯先服软的沉默。",
+    next: "ch2_cedric_apology",
+  },
+  ch2_cedric_apology: {
+    speaker: "塞德里克",
+    text: "昨晚那句“都有”，我收回一半。利用是真的。担心也是真的。我说得太像审讯。",
+    next: "ch2_antalia_boundary",
+  },
+  ch2_antalia_boundary: {
+    speaker: "安塔莉亚",
+    text: "我不需要你把话修得好听。你要用我，就明说。你要帮我，也别装成施舍。",
+    next: "ch2_terms",
+  },
+  ch2_terms: {
+    speaker: "塞德里克",
+    text: "那就立约。你查灵魂切割术，我查战报。证据共享，行动同路。谁先藏刀，谁先退出。",
+    next: "ch2_antalia_terms",
+  },
+  ch2_antalia_terms: {
+    speaker: "安塔莉亚",
+    text: "再加一条。猫族俘虏归我查问。你的人不准逼供，不准拿他们当筹码。",
+    next: "ch2_cedric_terms",
+  },
+  ch2_cedric_terms: {
+    speaker: "塞德里克",
+    text: "可以。你也答应我，今晚之后别再光脚踩石地。王室血脉冻病了，很难写进盟约。",
+    next: "ch2_first_smile",
+  },
+  ch2_first_smile: {
+    speaker: "旁白",
+    text: "安塔莉亚盯了他一会儿。她没有笑，只是把尾巴从椅脚边收了回来。那已经很接近让步。",
+    next: "choice_truce",
+  },
+  choice_truce: {
+    choices: [
+      {
+        label: "立约",
+        hint: "把话写死",
+        effects: { vigilance: -1, observation: 1 },
+        flags: { formalPact: true },
+        next: "ch2_write_pact",
+      },
+      {
+        label: "握手",
+        hint: "先给温度",
+        effects: { closeness: 2 },
+        flags: { warmPact: true },
+        next: "ch2_handshake",
+      },
+    ],
+  },
+  ch2_write_pact: {
+    speaker: "旁白",
+    text: "他们把盟约写在残卷背面。字迹并不漂亮，却每一条都清楚。安塔莉亚收下了那页纸。",
+    next: "ch2_morning_camp",
+  },
+  ch2_handshake: {
+    speaker: "旁白",
+    text: "塞德里克伸出手。安塔莉亚迟疑片刻，指尖碰上去，又很快撤开。她的耳尖红得很明显。",
+    next: "ch2_morning_camp",
+  },
+  ch2_morning_camp: {
+    bg: "entrance",
+    cg: "refugeeCamp",
+    cgMotion: "moonCorridor",
+    speaker: "旁白",
+    text: "清晨，他们去了北门营地。雪水和药草味混在一起。猫族俘虏看见安塔莉亚，先跪下，再哭出声。",
+    next: "ch2_child",
+  },
+  ch2_child: {
+    speaker: "旁白",
+    text: "一个小女孩发着烧，怀里抱着昨夜那只灰白小猫。她看见王冠，下意识把面包藏进袖子。",
+    next: "ch2_antalia_kneel",
+  },
+  ch2_antalia_kneel: {
+    speaker: "安塔莉亚",
+    text: "别跪。活下来的人不欠我跪礼。把手伸出来，我看看你烧到哪里了。",
+    next: "ch2_cedric_glove",
+  },
+  ch2_cedric_glove: {
+    speaker: "塞德里克",
+    text: "药箱给她。还有，营门外的贵族车队拦住。今天谁都别来认领功劳。",
+    next: "ch2_servant_report",
+  },
+  ch2_servant_report: {
+    speaker: "侍从",
+    text: "陛下，南境贵族已经在门口等了半个时辰。他们说粮车迟到，要您给说法。",
+    next: "ch2_cedric_small_rule",
+  },
+  ch2_cedric_small_rule: {
+    speaker: "塞德里克",
+    text: "让他们等。这里的孩子先退烧。粮车的事，我亲自记账。",
+    next: "ch2_antalia_question",
+  },
+  ch2_antalia_question: {
+    speaker: "安塔莉亚",
+    text: "你总说记账。人命在你的账里排第几？",
+    next: "ch2_cedric_answer",
+  },
+  ch2_cedric_answer: {
+    speaker: "塞德里克",
+    text: "排在最前。只是很多人喜欢把自己的名字写在前面，挡住后面的人命。",
+    next: "ch2_antalia_watch",
+  },
+  ch2_antalia_watch: {
+    speaker: "旁白",
+    text: "安塔莉亚没有接话。她低头喂女孩喝药，尾巴却轻轻绕过小猫，替它挡住冷风。",
+    next: "ch2_child_name",
+  },
+  ch2_child_name: {
+    speaker: "侍从",
+    text: "陛下，那孩子问灰猫能不能留下。营规里没有这一条。",
+    next: "ch2_antalia_rule",
+  },
+  ch2_antalia_rule: {
+    speaker: "安塔莉亚",
+    text: "那就添一条。营地里能活下来的小东西，都有名字。",
+    next: "ch2_cedric_watch_rule",
+  },
+  ch2_cedric_watch_rule: {
+    speaker: "塞德里克",
+    text: "你给我的律令写得倒快。",
+    next: "ch2_antalia_name_cat",
+  },
+  ch2_antalia_name_cat: {
+    speaker: "安塔莉亚",
+    text: "它叫面包。因为它为了半块面包差点被扔出去。",
+    next: "ch2_cedric_nearly_laugh",
+  },
+  ch2_cedric_nearly_laugh: {
+    speaker: "旁白",
+    text: "塞德里克偏过脸，像是咳了一声。安塔莉亚看见了，却很宽容地放过他。",
+    next: "ch2_future",
+  },
+  ch2_future: {
+    speaker: "塞德里克",
+    text: "若旧王都还能重建，你第一条律令也打算这么写？",
+    next: "ch2_antalia_future",
+  },
+  ch2_antalia_future: {
+    speaker: "安塔莉亚",
+    text: "第一条写：不准把活物关进漂亮笼子。第二条写：国王犯错也要道歉。",
+    next: "ch2_cedric_future",
+  },
+  ch2_cedric_future: {
+    speaker: "塞德里克",
+    text: "第二条很危险。会让很多国王失业。",
+    next: "ch2_archive",
+  },
+  ch2_archive: {
+    bg: "library",
+    cg: "archiveLedger",
+    cgMotion: "librarySpellbook",
+    speaker: "旁白",
+    text: "午后，老书记官带来一箱封存账册。灰尘落下时，塞德里克第一次看见先王的私印压在猫族粮单上。",
+    next: "ch2_scribe_warning",
+  },
+  ch2_scribe_warning: {
+    speaker: "老书记官",
+    text: "陛下，这些账册我藏了七年。先王死前烧过一批，剩下的只够指向一个人。",
+    next: "ch2_minister_name",
+  },
+  ch2_minister_name: {
+    speaker: "塞德里克",
+    text: "大臣。难怪他急着处决俘虏。活口越少，账越好改。",
+    next: "ch2_antalia_memory",
+  },
+  ch2_antalia_memory: {
+    speaker: "安塔莉亚",
+    text: "我记得他的声音。王宫起火那晚，有人在父王门外说：钥匙已经换了。",
+    next: "ch2_cedric_guilt",
+  },
+  ch2_cedric_guilt: {
+    speaker: "塞德里克",
+    text: "我攻城时只看见火。我以为自己来晚了。也许从一开始，就有人等我背这口锅。",
+    next: "ch2_scribe_push",
+  },
+  ch2_scribe_push: {
+    speaker: "老书记官",
+    text: "真相不怕晚，怕的是你们查到一半，又用王的骄傲把门关上。",
+    next: "ch2_choice_archive",
+  },
+  ch2_choice_archive: {
+    choices: [
+      {
+        label: "查账",
+        hint: "先稳证据",
+        effects: { observation: 2 },
+        flags: { ledgerProof: true },
+        next: "ch2_check_books",
+      },
+      {
+        label: "问人",
+        hint: "先追活口",
+        effects: { vigilance: 1 },
+        flags: { witnessProof: true },
+        next: "ch2_question_camp",
+      },
+    ],
+  },
+  ch2_check_books: {
+    speaker: "旁白",
+    text: "他们逐页核对粮印。每一笔都很小，连起来却像一条从猫族王宫拖回朝堂的血线。",
+    next: "ch2_depart",
+  },
+  ch2_question_camp: {
+    speaker: "旁白",
+    text: "他们回到营地。老俘虏听见大臣的名字，手抖得连碗都拿不稳，却还是点了头。",
+    next: "ch2_depart",
+  },
+  ch2_depart: {
+    chapter: "第三章",
+    bg: "entrance",
+    speaker: "旁白",
+    text: "第三日，塞德里克带少数护卫出城。安塔莉亚披上灰斗篷，第一次以自己的脚走向故国。",
+    next: "ch3_road",
+  },
+  ch3_road: {
+    speaker: "塞德里克",
+    text: "若你想现在回头，还来得及。旧王都不会因为你迟一天去，就少疼一点。",
+    next: "ch3_antalia_reply",
+  },
+  ch3_antalia_reply: {
+    speaker: "安塔莉亚",
+    text: "我怕疼。可我更怕有一天，我只记得自己怕过。",
+    next: "ch3_night_camp",
+  },
+  ch3_night_camp: {
+    speaker: "旁白",
+    text: "夜里他们在废城外停下。风吹过断墙，篝火很小，小到照不亮任何人的表情。",
+    next: "ch3_cedric_father",
+  },
+  ch3_cedric_father: {
+    speaker: "塞德里克",
+    text: "我父王教我第一件事，是别在别人面前哭。他说眼泪会变成把柄。",
+    next: "ch3_antalia_father",
+  },
+  ch3_antalia_father: {
+    speaker: "安塔莉亚",
+    text: "我父王教我第一件事，是摔倒后先看自己痛不痛。痛就哭，哭完再站。",
+    next: "ch3_cedric_envy",
+  },
+  ch3_cedric_envy: {
+    speaker: "塞德里克",
+    text: "听起来很奢侈。",
+    next: "ch3_antalia_reply_soft",
+  },
+  ch3_antalia_reply_soft: {
+    speaker: "安塔莉亚",
+    text: "明天到旧王都，我可能会哭。你可以转过身，也可以递手帕。",
+    next: "ch3_cedric_promise",
+  },
+  ch3_cedric_promise: {
+    speaker: "塞德里克",
+    text: "我带了两块。多的一块给面包擦爪子。",
+    next: "ch3_ruins",
+  },
+  ch3_ruins: {
+    cg: "oldCapitalRuins",
+    cgMotion: "moonCorridor",
+    speaker: "旁白",
+    text: "旧王都只剩半截月门。风穿过焦黑的廊柱，带起一串碎铃声。安塔莉亚在祭坛前停住。",
+    next: "ch3_bell",
+  },
+  ch3_bell: {
+    speaker: "旁白",
+    text: "她捡起一枚小小的银铃。铃舌已经断了，摇起来没有声音。她却像被那片安静刺中。",
+    next: "ch3_antalia_memory",
+  },
+  ch3_antalia_memory: {
+    speaker: "安塔莉亚",
+    text: "这是我弟弟的。他总把铃系在尾巴上，跑过走廊时吵得人头痛。",
+    next: "ch3_cedric_space",
+  },
+  ch3_cedric_space: {
+    speaker: "旁白",
+    text: "塞德里克停在三步之外。他没有安慰，也没有碰她。安塔莉亚终于允许自己哭了一会儿。",
+    next: "ch3_general_arrive",
+  },
+  ch3_general_arrive: {
+    speaker: "大将军",
+    text: "陛下，废墟东侧发现地下门。臣当年攻城时没有见过那条路。",
+    next: "ch3_antalia_anger",
+  },
+  ch3_antalia_anger: {
+    speaker: "安塔莉亚",
+    text: "你当然没有见过。那是王族逃生道。知道它的人，本该都在这里死了。",
+    next: "ch3_general_guilt",
+  },
+  ch3_general_guilt: {
+    speaker: "大将军",
+    text: "臣攻下城门时，内宫已经起火。若臣当日多追一步，也许还能救人。",
+    next: "ch3_cedric_stop",
+  },
+  ch3_cedric_stop: {
+    speaker: "塞德里克",
+    text: "悔罪留到查完再说。她现在需要路，不需要第二个男人在废墟里谈自己有多痛。",
+    next: "ch3_antalia_look",
+  },
+  ch3_antalia_look: {
+    speaker: "旁白",
+    text: "安塔莉亚抬头看了他一眼。这次她没有反驳。风把她的发尾吹到他披风上，又很快分开。",
+    next: "ch3_altar",
+  },
+  ch3_altar: {
+    cg: "altarMemory",
+    cgMotion: "humanReveal",
+    speaker: "旁白",
+    text: "地下祭坛亮起时，月石映出一段残影。先王倒在阵中，大臣的手按着王印，念完最后一句咒。",
+    next: "ch3_memory_voice",
+  },
+  ch3_memory_voice: {
+    speaker: "大臣",
+    text: "王族血脉可分，王国也可分。猫族的身，给新王做锁；猫族的魂，替旧王续命。",
+    next: "ch3_antalia_break",
+  },
+  ch3_antalia_break: {
+    speaker: "安塔莉亚",
+    text: "他把我变成猫，为了把我带到你身边。你一直在替他看守钥匙。",
+    next: "ch3_cedric_recoil",
+  },
+  ch3_cedric_recoil: {
+    speaker: "塞德里克",
+    text: "我戴了三年的王冠，原来只是他留给大臣的一把锁。",
+    next: "ch3_choice_altar",
+  },
+  ch3_choice_altar: {
+    choices: [
+      {
+        label: "追火",
+        hint: "立刻回宫",
+        effects: { vigilance: 2 },
+        flags: { urgentReturn: true },
+        next: "ch3_return_now",
+      },
+      {
+        label: "护她",
+        hint: "先接住她",
+        effects: { closeness: 2 },
+        flags: { heldGrief: true },
+        next: "ch3_hold_grief",
+      },
+      {
+        label: "问铃",
+        hint: "补上记忆",
+        effects: { observation: 2 },
+        next: "ch3_ask_bell",
+      },
+    ],
+  },
+  ch3_return_now: {
+    speaker: "旁白",
+    text: "塞德里克立刻下令回宫。安塔莉亚握紧断铃，跟上他时脚步很稳，眼睛却红着。",
+    next: "ch3_return",
+  },
+  ch3_hold_grief: {
+    speaker: "旁白",
+    text: "他把披风披到她肩上。安塔莉亚抓住披风边缘，像抓住最后一块还没有烧尽的布。",
+    next: "ch3_return",
+  },
+  ch3_ask_bell: {
+    speaker: "塞德里克",
+    text: "铃声断了，不代表没人听见。你弟弟叫什么？",
+    next: "ch3_name",
+  },
+  ch3_name: {
+    speaker: "安塔莉亚",
+    text: "莱恩。他总说自己长大后要当最吵的国王。",
+    next: "ch3_return",
+  },
+  ch3_return: {
+    chapter: "第四章",
+    bg: "throne",
+    speaker: "旁白",
+    text: "他们赶回王宫时，钟声已经乱了。大臣站在王座前，手里拿着本该封在禁库里的旧王印。",
+    next: "ch4_coup_cg",
+  },
+  ch4_coup_cg: {
+    cg: "palaceCoup",
+    cgMotion: "humanReveal",
+    speaker: "旁白",
+    text: "蓝色锁链从地砖里升起。朝臣们跪倒一片，没人敢看王座，也没人敢看那个被锁链护住的大臣。",
+    next: "ch4_minister_claim",
+  },
+  ch4_minister_claim: {
+    speaker: "大臣",
+    text: "陛下，您被兽族妖女蛊惑。臣请出先王遗印，暂代国政，保王室清明。",
+    next: "ch4_cedric_laugh",
+  },
+  ch4_cedric_laugh: {
+    speaker: "塞德里克",
+    text: "你说保王室时，手别抖。那枚印只认血，不认你这种偷印的人。",
+    next: "ch4_antalia_public",
+  },
+  ch4_antalia_public: {
+    speaker: "安塔莉亚",
+    text: "他认得我。你把我变成猫，把我送到王座边。现在钥匙自己走回来了。",
+    next: "ch4_minister_cut",
+  },
+  ch4_minister_cut: {
+    speaker: "大臣",
+    text: "钥匙就该插在锁里。公主殿下，你的魂本来就不完整。",
+    next: "ch4_chain",
+  },
+  ch4_chain: {
+    speaker: "旁白",
+    text: "锁链穿过月光，直扑安塔莉亚。塞德里克一步挡在她身前，手背被蓝火划开。",
+    next: "ch4_cedric_wound",
+  },
+  ch4_cedric_wound: {
+    speaker: "塞德里克",
+    text: "我说过，谁先藏刀，谁先退出。你连上桌的资格都没了。",
+    next: "ch4_antalia_rune",
+  },
+  ch4_antalia_rune: {
+    speaker: "旁白",
+    text: "安塔莉亚抓住锁链上的符文。她的猫耳被魔力压得发颤，却硬生生撕下一片蓝光。",
+    next: "ch4_false_loss",
+  },
+  ch4_false_loss: {
+    speaker: "旁白",
+    text: "王印突然亮起。塞德里克膝盖一软，眼神空了一瞬。大臣终于露出笑意。",
+    next: "ch4_minister_win",
+  },
+  ch4_minister_win: {
+    speaker: "大臣",
+    text: "先王留下的不只一把锁。陛下，您身体里的那一半魂，也该物归原主。",
+    next: "ch4_antalia_choice",
+  },
+  ch4_antalia_choice: {
+    speaker: "安塔莉亚",
+    text: "塞德里克，看着我。你属于你自己。你是那个把笼门打开的人。",
+    next: "ch4_cedric_return",
+  },
+  ch4_cedric_return: {
+    speaker: "塞德里克",
+    text: "我听见了。别喊那么大声，我还没死。",
+    next: "ch4_retreat",
+  },
+  ch4_retreat: {
+    speaker: "旁白",
+    text: "大将军率兵撞开侧门。老书记官把账册举过头顶。朝臣的沉默裂出第一道缝。",
+    next: "ch4_after",
+  },
+  ch4_after: {
+    cg: "infirmaryAftermath",
+    cgMotion: "moonCorridor",
+    speaker: "旁白",
+    text: "深夜，雨落在旧礼拜堂的彩窗上。塞德里克坐在长椅边，手上缠着安塔莉亚打的结。",
+    next: "ch4_bandage",
+  },
+  ch4_bandage: {
+    speaker: "安塔莉亚",
+    text: "你刚才差点站不起来。",
+    next: "ch4_cedric_joke",
+  },
+  ch4_cedric_joke: {
+    speaker: "塞德里克",
+    text: "差点而已。王的膝盖很贵，不能随便送给叛臣看。",
+    next: "ch4_antalia_angry_soft",
+  },
+  ch4_antalia_angry_soft: {
+    speaker: "安塔莉亚",
+    text: "别开玩笑。我叫你的时候，你真的不在了。",
+    next: "ch4_cedric_soft",
+  },
+  ch4_cedric_soft: {
+    speaker: "塞德里克",
+    text: "我回来了。因为你叫的是我的名字。",
+    next: "ch4_near_confession",
+  },
+  ch4_near_confession: {
+    speaker: "旁白",
+    text: "安塔莉亚低头系紧绷带。她的手指很稳，耳尖却比烛火还红。",
+    next: "ch4_choice_after",
+  },
+  ch4_choice_after: {
+    choices: [
+      {
+        label: "靠近",
+        hint: "别退",
+        effects: { closeness: 2 },
+        next: "ch4_closer",
+      },
+      {
+        label: "守夜",
+        hint: "先稳住",
+        effects: { vigilance: -1, observation: 1 },
+        next: "ch4_watch",
+      },
+    ],
+  },
+  ch4_closer: {
+    speaker: "旁白",
+    text: "他没有再说话，只把受伤的手放到她能碰到的位置。安塔莉亚没有躲。",
+    next: "ch5_plan",
+  },
+  ch4_watch: {
+    speaker: "旁白",
+    text: "他们隔着一盏烛火坐到天亮。谁都没睡，谁也没把沉默当成逃避。",
+    next: "ch5_plan",
+  },
+  ch5_plan: {
+    chapter: "终章",
+    bg: "library",
+    speaker: "旁白",
+    text: "最后的术式藏在王座下。要破它，必须让两份被切开的魂同时承认自己的名字。",
+    next: "ch5_scribe_key",
+  },
+  ch5_scribe_key: {
+    speaker: "老书记官",
+    text: "先王把恐惧切给儿子，把罪证切给猫族。你们若互相怀疑，术式就会合上。",
+    next: "ch5_antalia_fear",
+  },
+  ch5_antalia_fear: {
+    speaker: "安塔莉亚",
+    text: "如果我失败，会变回猫吗？",
+    next: "ch5_cedric_answer",
+  },
+  ch5_cedric_answer: {
+    speaker: "塞德里克",
+    text: "你变成什么都行。别把自己交给他就行。",
+    next: "ch5_antalia_smile",
+  },
+  ch5_antalia_smile: {
+    speaker: "安塔莉亚",
+    text: "这句话听起来很难听。",
+    next: "ch5_cedric_smile",
+  },
+  ch5_cedric_smile: {
+    speaker: "塞德里克",
+    text: "我知道。可你听懂了。",
+    next: "ch5_final_cg",
+  },
+  ch5_final_cg: {
+    bg: "throne",
+    cg: "finalRitual",
+    cgMotion: "humanReveal",
+    speaker: "旁白",
+    text: "月升到王座正上方时，断开的王印在两人掌心合拢。银蓝色光芒照亮整座大厅。",
+    next: "ch5_minister_last",
+  },
+  ch5_minister_last: {
+    speaker: "大臣",
+    text: "你们以为信任能改写术式？王国从来靠恐惧活着。",
+    next: "ch5_cedric_last",
+  },
+  ch5_cedric_last: {
+    speaker: "塞德里克",
+    text: "恐惧只能让人跪下。站起来的人，你管不住。",
+    next: "ch5_antalia_last",
+  },
+  ch5_antalia_last: {
+    speaker: "安塔莉亚",
+    text: "我的名字是安塔莉亚。钥匙、战利品、宠物，这些名字都滚开。",
+    next: "ch5_break_spell",
+  },
+  ch5_break_spell: {
+    speaker: "旁白",
+    text: "锁链一寸寸碎开。王印里的旧魂发出尖啸，又被晨光吞没。大臣手中的印章裂成粉末。",
+    next: "ch5_public_truth",
+  },
+  ch5_public_truth: {
+    speaker: "旁白",
+    text: "账册、残卷和俘虏证词摆上朝堂。旧案终于有了名字。死者仍然沉默，活人开始作证。",
+    next: "ch5_public_choice",
+  },
+  ch5_public_choice: {
+    speaker: "旁白",
+    text: "有人要求立刻处死大臣。有人害怕牵出更多旧贵族。大厅里第一次吵得像真正的朝堂。",
+    next: "choice_trial",
+  },
+  choice_trial: {
+    choices: [
+      {
+        label: "公开",
+        hint: "让众人听见",
+        effects: { observation: 1 },
+        next: "ch5_open_trial",
+      },
+      {
+        label: "护证",
+        hint: "保住活口",
+        effects: { vigilance: -1 },
+        next: "ch5_guard_witness",
+      },
+    ],
+  },
+  ch5_open_trial: {
+    speaker: "塞德里克",
+    text: "公开审。每一份证词都念出来。王冠怕丢脸，百姓就只能丢命。",
+    next: "ch5_antalia_public_grief",
+  },
+  ch5_guard_witness: {
+    speaker: "安塔莉亚",
+    text: "先护住证人。死得太快的罪人，只会把真相一起带走。",
+    next: "ch5_antalia_public_grief",
+  },
+  ch5_antalia_public_grief: {
+    speaker: "旁白",
+    text: "猫族俘虏站上台阶时，安塔莉亚没有替他们说话。她只是站在那里，让他们自己说。",
+    next: "ch5_cedric_public_grief",
+  },
+  ch5_cedric_public_grief: {
+    speaker: "旁白",
+    text: "塞德里克也没有替父王辩解。他听完每一个名字，把手放在王冠上，又慢慢放下。",
+    next: "ch5_minister_end",
+  },
+  ch5_minister_end: {
+    speaker: "大臣",
+    text: "陛下，臣只是替王国做了必要的事。",
+    next: "ch5_sentence",
+  },
+  ch5_sentence: {
+    speaker: "塞德里克",
+    text: "王国不需要你替它杀人。押下去，公开审判。让每个失去家的人都能听见判词。",
+    next: "ch5_after_trial",
+  },
+  ch5_after_trial: {
+    speaker: "旁白",
+    text: "秋天来时，北门营地拆了围栏。旧王都的月门被扶正，第一批猫族孩子回去种下白花。",
+    next: "ch5_garden_cg",
+  },
+  ch5_garden_cg: {
+    cg: "sunriseEnding",
+    cgMotion: "softOrder",
+    speaker: "旁白",
+    text: "新修好的花园里，喷泉再次流动。那只灰白小猫跳上石沿，骄傲得像刚巡视完自己的王国。",
+    next: "ch5_no_crown",
+  },
+  ch5_no_crown: {
+    speaker: "安塔莉亚",
+    text: "你今天没戴王冠。",
+    next: "ch5_cedric_end",
+  },
+  ch5_cedric_end: {
+    speaker: "塞德里克",
+    text: "太重。偶尔也该让脖子休息。再说，有人看见王冠就想咬。",
+    next: "ch5_antalia_end",
+  },
+  ch5_antalia_end: {
+    speaker: "安塔莉亚",
+    text: "我现在可以用人的牙咬。",
+    next: "ch5_choice_end",
+  },
+  ch5_choice_end: {
+    choices: [
+      {
+        label: "牵手",
+        hint: "留在此刻",
+        effects: { closeness: 1 },
+        next: "ch5_hold_hand",
+      },
+      {
+        label: "并肩",
+        hint: "走向城门",
+        effects: { observation: 1 },
+        next: "ch5_side_by_side",
+      },
+    ],
+  },
+  ch5_hold_hand: {
+    speaker: "旁白",
+    text: "塞德里克伸出手。这一次，安塔莉亚没有碰一下就逃。她握住他，掌心温热。",
+    next: "final_words",
+  },
+  ch5_side_by_side: {
+    speaker: "旁白",
+    text: "他们并肩走向城门。阳光落在两道影子上，中间没有笼子，也没有锁链。",
+    next: "final_words",
+  },
+  final_words: {
+    speaker: "塞德里克",
+    text: "安塔莉亚，留下来由你。离开也由你。你自己选。",
+    next: "final_answer",
+  },
+  final_answer: {
+    speaker: "安塔莉亚",
+    text: "那我今天留下。明天也许出去看看。后天回来吵你。",
+    next: "final_soft",
+  },
+  final_soft: {
+    speaker: "塞德里克",
+    text: "听起来很麻烦。",
+    next: "final_smile",
+  },
+  final_smile: {
+    speaker: "安塔莉亚",
+    text: "你最讨厌无意义的损耗吧？我很有用。",
+    next: "final_close",
+  },
+  final_close: {
+    speaker: "旁白",
+    text: "塞德里克笑了。那笑意卸下王座的重量，像一个终于学会开门的人，在日光里松了一口气。",
     next: "result",
   },
   result: {
     choices: [
       {
-        label: "结算",
-        hint: "收束这一夜",
+        label: "尾声",
+        hint: "看结局",
         next: "ending",
       },
     ],
   },
   ending: {
-    chapter: "结算",
-    bg: "library",
+    chapter: "大结局",
+    bg: "throne",
     sprite: "antalia",
     speaker: "系统",
-    text: "第一章结束。温柔与克制会降低警戒，观察与亲近会开启更近的距离。第二章将进入临时同盟、灵魂魔法与宫廷阴谋。",
+    text: "大结局达成：软爪之约。笼门打开后，留下和离开都成了自由。",
     next: null,
   },
 };
@@ -740,6 +1507,9 @@ const storySections = {
   "序章：献礼与开笼": ["throneGift", "catIntro", "softOrder", "openCage"],
   "第一章：早膳、救猫与议事厅": ["morningBreakfast", "saveCat", "councilSignal", "eveningFable"],
   "月圆夜：真身、禁书与对峙": ["moonCorridor", "humanReveal", "librarySpellbook", "libraryConfrontation"],
+  "第二章：临时同盟与营地": ["truceLibrary", "refugeeCamp", "archiveLedger"],
+  "第三章：旧王都与真相": ["oldCapitalRuins", "altarMemory", "palaceCoup"],
+  "终章：政变、破咒与自由": ["infirmaryAftermath", "finalRitual", "sunriseEnding"],
 };
 
 const dom = {
@@ -1253,7 +2023,7 @@ function resultSummary() {
   if (state.stats.closeness >= 8 && state.stats.vigilance <= 2) route = "掌中猫";
   if (state.stats.vigilance >= 5) route = "野猫归林";
   if (state.flags.cold && state.stats.closeness <= 1) route = "笼中鸟";
-  return `<p>当前导向：<strong>${route}</strong></p><p>亲近 ${state.stats.closeness} · 警戒 ${state.stats.vigilance} · 观察 ${state.stats.observation}</p><p>第二章已解锁：两人的秘密。</p>`;
+  return `<p>大结局：<strong>软爪之约</strong></p><p>当前导向：<strong>${route}</strong></p><p>亲近 ${state.stats.closeness} · 警戒 ${state.stats.vigilance} · 观察 ${state.stats.observation}</p><p>笼门打开后，留下和离开都成了自由。</p>`;
 }
 
 function showModal(title, html) {
