@@ -77,8 +77,8 @@ const textChars = Object.values(story).reduce((sum, node) => {
   const choiceTotal = (node.choices ?? []).reduce((inner, choice) => inner + choice.label.length + choice.hint.length, 0);
   return sum + textTotal + choiceTotal;
 }, 0);
-if (textChars < 3800) {
-  throw new Error(`Story text is too thin for the requested playable act: ${textChars} chars`);
+if (textChars < 8200) {
+  throw new Error(`Story text is too thin for a complete route: ${textChars} chars`);
 }
 
 import { access, readFile } from "node:fs/promises";
@@ -150,6 +150,10 @@ for (const [section, cgs] of Object.entries(storySections)) {
   }
 }
 
+if (Object.keys(storySections).length < 6) {
+  throw new Error(`Final route needs at least 6 story sections: ${Object.keys(storySections).length}`);
+}
+
 const visited = new Set();
 const stack = ["start"];
 while (stack.length) {
@@ -170,6 +174,9 @@ if (!visited.has("ending")) {
 }
 
 const reachableCgs = new Set([...visited].flatMap((id) => (story[id].cg ? [story[id].cg] : [])));
+if (reachableCgs.size < 21) {
+  throw new Error(`Complete route needs at least 21 reachable CGs: ${reachableCgs.size}`);
+}
 for (const [cg] of Object.entries(assets.cg)) {
   if (!reachableCgs.has(cg)) throw new Error(`CG asset is not reachable in story: ${cg}`);
 }
@@ -181,6 +188,9 @@ for (const [section, cgs] of Object.entries(storySections)) {
 }
 
 for (const [id, node] of Object.entries(story)) {
+  if (node.text && node.text.length > 68) {
+    throw new Error(`Dialogue/narration line is too long at ${id}: ${node.text.length} chars`);
+  }
   for (const choice of node.choices ?? []) {
     if (choice.label.length > 4) throw new Error(`Choice label is not short enough at ${id}: ${choice.label}`);
     if (/[+-]|亲近|警戒|观察|因为|所以|底线|选择/.test(choice.label)) {
@@ -189,8 +199,12 @@ for (const [id, node] of Object.entries(story)) {
   }
 }
 
-if (visited.size < 100) {
-  throw new Error(`Playable story is too short: only ${visited.size} reachable nodes`);
+if (visited.size < 230) {
+  throw new Error(`Playable story is too short for a complete ending: only ${visited.size} reachable nodes`);
+}
+
+if (story.ending.chapter !== "大结局" || !/大结局/.test(story.ending.text)) {
+  throw new Error("Ending node is not a final grand ending");
 }
 
 const stats = { ...initialStats, closeness: 5, observation: 1 };
