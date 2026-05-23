@@ -192,13 +192,13 @@ const story = {
   choice_throne: {
     choices: [
       {
-        label: "回王座",
+        label: "回到王座",
         hint: "让这场献礼结束",
         effects: {},
         next: "bedroom_night",
       },
       {
-        label: "多看一眼",
+        label: "再看她一眼",
         hint: "确认那道目光",
         effects: { observation: 1 },
         next: "observed_light",
@@ -328,20 +328,20 @@ const story = {
   choice_morning: {
     choices: [
       {
-        label: "伸手",
+        label: "伸手试探",
         hint: "试试她的底线",
         effects: { closeness: 2 },
         next: "touch_cat",
       },
       {
-        label: "传膳",
+        label: "传早膳来",
         hint: "把体面留在桌上",
         effects: { closeness: -1 },
         flags: { cold: true },
         next: "ignore_cat",
       },
       {
-        label: "逗她",
+        label: "逗她开口",
         hint: "看她会不会失手",
         effects: { closeness: 5, observation: 1 },
         flags: { teaser: true },
@@ -721,19 +721,19 @@ const story = {
   choice_library: {
     choices: [
       {
-        label: "逼近",
+        label: "逼近一步",
         hint: "逼她先露牌",
         effects: { vigilance: 3, closeness: -1 },
         next: "pressure",
       },
       {
-        label: "后退",
+        label: "退开半步",
         hint: "把选择还给她",
         effects: { vigilance: -2, closeness: 2 },
         next: "step_back",
       },
       {
-        label: "碰耳",
+        label: "轻碰耳尖",
         hint: "只有足够近才做得到",
         requires: (stats) => stats.closeness >= 5 && stats.observation >= 1,
         effects: { closeness: 3, vigilance: 1 },
@@ -824,14 +824,14 @@ const story = {
   choice_truce: {
     choices: [
       {
-        label: "立约",
+        label: "写下契约",
         hint: "把话写死",
         effects: { vigilance: -1, observation: 1 },
         flags: { formalPact: true },
         next: "ch2_write_pact",
       },
       {
-        label: "握手",
+        label: "伸手言和",
         hint: "先给温度",
         effects: { closeness: 2 },
         flags: { warmPact: true },
@@ -973,14 +973,14 @@ const story = {
   ch2_choice_archive: {
     choices: [
       {
-        label: "查账",
+        label: "先查账册",
         hint: "先稳证据",
         effects: { observation: 2 },
         flags: { ledgerProof: true },
         next: "ch2_check_books",
       },
       {
-        label: "问人",
+        label: "先问活口",
         hint: "先追活口",
         effects: { vigilance: 1 },
         flags: { witnessProof: true },
@@ -1117,21 +1117,21 @@ const story = {
   ch3_choice_altar: {
     choices: [
       {
-        label: "追火",
+        label: "追回火光",
         hint: "立刻回宫",
         effects: { vigilance: 2 },
         flags: { urgentReturn: true },
         next: "ch3_return_now",
       },
       {
-        label: "护她",
+        label: "护住她",
         hint: "先接住她",
         effects: { closeness: 2 },
         flags: { heldGrief: true },
         next: "ch3_hold_grief",
       },
       {
-        label: "问铃",
+        label: "问清铃声",
         hint: "补上记忆",
         effects: { observation: 2 },
         next: "ch3_ask_bell",
@@ -1267,13 +1267,13 @@ const story = {
   ch4_choice_after: {
     choices: [
       {
-        label: "靠近",
+        label: "坐近一些",
         hint: "别退",
         effects: { closeness: 2 },
         next: "ch4_closer",
       },
       {
-        label: "守夜",
+        label: "留下守夜",
         hint: "先稳住",
         effects: { vigilance: -1, observation: 1 },
         next: "ch4_watch",
@@ -1363,13 +1363,13 @@ const story = {
   choice_trial: {
     choices: [
       {
-        label: "公开",
+        label: "公开证词",
         hint: "让众人听见",
         effects: { observation: 1 },
         next: "ch5_open_trial",
       },
       {
-        label: "护证",
+        label: "护住证人",
         hint: "保住活口",
         effects: { vigilance: -1 },
         next: "ch5_guard_witness",
@@ -1436,13 +1436,13 @@ const story = {
   ch5_choice_end: {
     choices: [
       {
-        label: "牵手",
+        label: "牵住她手",
         hint: "留在此刻",
         effects: { closeness: 1 },
         next: "ch5_hold_hand",
       },
       {
-        label: "并肩",
+        label: "并肩出城",
         hint: "走向城门",
         effects: { observation: 1 },
         next: "ch5_side_by_side",
@@ -1487,7 +1487,7 @@ const story = {
   result: {
     choices: [
       {
-        label: "尾声",
+        label: "走向尾声",
         hint: "看结局",
         next: "ending",
       },
@@ -1533,13 +1533,22 @@ const dom = {
   modalTitle: document.querySelector("#modal-title"),
   modalBody: document.querySelector("#modal-body"),
   history: document.querySelector("#history-button"),
+  inlineHistory: document.querySelector("#log-inline-button"),
+  auto: document.querySelector("#auto-button"),
+  skip: document.querySelector("#skip-button"),
+  map: document.querySelector("#map-button"),
   save: document.querySelector("#save-button"),
   load: document.querySelector("#load-button"),
+  quickSave: document.querySelector("#quick-save-button"),
+  quickLoad: document.querySelector("#quick-load-button"),
   settings: document.querySelector("#settings-button"),
+  inlineSettings: document.querySelector("#settings-inline-button"),
 };
 
 const storeKey = "soft-paws-save-v1";
+const quickStoreKey = "soft-paws-quick-save-v1";
 const settingsKey = "soft-paws-settings-v1";
+const readKey = "soft-paws-read-v1";
 const musicMoods = {
   throne: "goldberg",
   bed: "gymnopedie",
@@ -1618,6 +1627,13 @@ window.__SOYA_DEBUG__ = {
 let typing = false;
 let fullText = "";
 let textTimer = null;
+let autoTimer = null;
+let autoMode = false;
+let skipMode = false;
+let currentNodeWasRead = false;
+let linePages = [];
+let linePageIndex = 0;
+let readNodes = loadReadNodes();
 let settings = loadSettings();
 let audio = {
   ctx: null,
@@ -1636,6 +1652,19 @@ function loadSettings() {
 
 function saveSettings() {
   localStorage.setItem(settingsKey, JSON.stringify(settings));
+}
+
+function loadReadNodes() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(readKey));
+    return new Set(Array.isArray(saved) ? saved : []);
+  } catch {
+    return new Set();
+  }
+}
+
+function saveReadNodes() {
+  localStorage.setItem(readKey, JSON.stringify([...readNodes]));
 }
 
 function preload() {
@@ -1724,6 +1753,8 @@ function playUiTone(kind = "next") {
 
 function startGame(fromSave = false) {
   initAudio();
+  clearAutoTimer();
+  setSkipMode(false);
   if (fromSave) {
     loadGame(false);
   } else {
@@ -1869,8 +1900,12 @@ function renderCast(node) {
 
 function renderNode() {
   clearTimeout(textTimer);
+  clearAutoTimer();
   const node = story[state.node];
   if (!node) return;
+  currentNodeWasRead = readNodes.has(state.node);
+  linePages = [];
+  linePageIndex = 0;
 
   dom.stage.classList.remove("has-choices");
   dom.choices.classList.add("hidden");
@@ -1911,10 +1946,13 @@ function renderNode() {
 
   if (node.choices) {
     typing = false;
+    markNodeRead(state.node);
+    setAutoMode(false);
+    setSkipMode(false);
     dom.stage.classList.add("has-choices");
     dom.speaker.classList.remove("hidden");
-    dom.speaker.textContent = "选择";
-    dom.line.textContent = "接下来怎么做？";
+    dom.speaker.textContent = "塞德里克";
+    dom.line.textContent = "塞德里克的选择。";
     renderChoices(node.choices);
     return;
   }
@@ -1926,8 +1964,41 @@ function renderNode() {
     dom.speaker.classList.remove("hidden");
     dom.speaker.textContent = node.speaker ?? "";
   }
-  typeLine(node.text ?? "");
-  state.history.push({ speaker: node.speaker ?? "旁白", text: node.text ?? "" });
+  linePages = splitTextPages(node.text ?? "");
+  showTextPage(0);
+}
+
+function splitTextPages(text) {
+  if (!text) return [""];
+  const target = 34;
+  const parts = text.match(/[^。！？；]+[。！？；]?|[^。！？；]+$/g) ?? [text];
+  const pages = [];
+  let buffer = "";
+  for (const raw of parts) {
+    const part = raw.trim();
+    if (!part) continue;
+    if (!buffer) {
+      buffer = part;
+    } else if (buffer.length + part.length <= target) {
+      buffer += part;
+    } else {
+      pages.push(buffer);
+      buffer = part;
+    }
+    while (buffer.length > target + 8) {
+      pages.push(buffer.slice(0, target));
+      buffer = buffer.slice(target);
+    }
+  }
+  if (buffer) pages.push(buffer);
+  return pages.length ? pages : [text];
+}
+
+function showTextPage(index) {
+  const page = linePages[index] ?? "";
+  linePageIndex = index;
+  typeLine(page);
+  state.history.push({ speaker: story[state.node]?.speaker ?? "旁白", text: page });
   trimHistory();
 }
 
@@ -1943,6 +2014,8 @@ function typeLine(text) {
       textTimer = window.setTimeout(tick, settings.speed);
     } else {
       typing = false;
+      if (linePageIndex >= linePages.length - 1) markNodeRead(state.node);
+      continueManagedAdvance();
     }
   };
   tick();
@@ -1952,11 +2025,19 @@ function finishTyping() {
   clearTimeout(textTimer);
   dom.line.textContent = fullText;
   typing = false;
+  if (linePageIndex >= linePages.length - 1) markNodeRead(state.node);
+  continueManagedAdvance();
 }
 
 function next() {
+  clearAutoTimer();
   if (typing) {
     finishTyping();
+    playUiTone();
+    return;
+  }
+  if (linePageIndex < linePages.length - 1) {
+    showTextPage(linePageIndex + 1);
     playUiTone();
     return;
   }
@@ -1964,6 +2045,8 @@ function next() {
   if (!node || node.choices) return;
   if (!node.next) {
     showModal("通关", resultSummary());
+    setAutoMode(false);
+    setSkipMode(false);
     return;
   }
   state.node = node.next;
@@ -1979,6 +2062,9 @@ function renderChoices(choices) {
     button.disabled = !enabled;
     button.textContent = enabled ? choice.label : `${choice.label} · 未解锁`;
     button.addEventListener("click", () => {
+      clearAutoTimer();
+      setAutoMode(false);
+      setSkipMode(false);
       initAudio();
       applyEffects(choice);
       state.node = choice.next;
@@ -1990,6 +2076,48 @@ function renderChoices(choices) {
   });
 }
 
+function markNodeRead(id) {
+  if (!id || readNodes.has(id)) return;
+  readNodes.add(id);
+  saveReadNodes();
+}
+
+function clearAutoTimer() {
+  if (autoTimer) {
+    clearTimeout(autoTimer);
+    autoTimer = null;
+  }
+}
+
+function setAutoMode(value) {
+  autoMode = value;
+  dom.auto?.classList.toggle("active", autoMode);
+  if (autoMode) setSkipMode(false);
+}
+
+function setSkipMode(value) {
+  skipMode = value;
+  dom.skip?.classList.toggle("active", skipMode);
+  if (skipMode) setAutoMode(false);
+}
+
+function continueManagedAdvance() {
+  const node = story[state.node];
+  if (!node || node.choices || dom.modal.open) return;
+  if (skipMode) {
+    if (currentNodeWasRead) {
+      autoTimer = window.setTimeout(next, 90);
+    } else {
+      setSkipMode(false);
+    }
+    return;
+  }
+  if (autoMode) {
+    const delay = Math.min(2800, Math.max(1100, fullText.length * 45));
+    autoTimer = window.setTimeout(next, delay);
+  }
+}
+
 function updateStats() {
   dom.stats.textContent = `亲近 ${state.stats.closeness} · 警戒 ${state.stats.vigilance} · 观察 ${state.stats.observation}`;
 }
@@ -1998,13 +2126,14 @@ function trimHistory() {
   if (state.history.length > 80) state.history.splice(0, state.history.length - 80);
 }
 
-function saveGame(showToast = true) {
-  localStorage.setItem(storeKey, JSON.stringify(state));
-  if (showToast) showModal("已存档", "<p>当前进度已保存到浏览器。</p>");
+function saveGame(showToast = true, key = storeKey, title = "已存档") {
+  localStorage.setItem(key, JSON.stringify(state));
+  if (key === storeKey) dom.continue.disabled = false;
+  if (showToast) showModal(title, "<p>当前进度已保存到浏览器。</p>");
 }
 
-function loadGame(showToast = true) {
-  const raw = localStorage.getItem(storeKey);
+function loadGame(showToast = true, key = storeKey, title = "已读档") {
+  const raw = localStorage.getItem(key);
   if (!raw) {
     if (showToast) showModal("没有存档", "<p>还没有可读取的存档。</p>");
     return false;
@@ -2013,9 +2142,18 @@ function loadGame(showToast = true) {
   if (showToast) {
     dom.title.classList.add("hidden");
     dom.stage.classList.remove("hidden");
+    showModal(title, "<p>已恢复到保存的位置。</p>");
   }
   renderNode();
   return true;
+}
+
+function quickSave() {
+  saveGame(true, quickStoreKey, "快速存档");
+}
+
+function quickLoad() {
+  loadGame(true, quickStoreKey, "快速读档");
 }
 
 function resultSummary() {
@@ -2027,6 +2165,9 @@ function resultSummary() {
 }
 
 function showModal(title, html) {
+  clearAutoTimer();
+  setAutoMode(false);
+  setSkipMode(false);
   dom.modalTitle.textContent = title;
   dom.modalBody.innerHTML = html;
   dom.modal.showModal();
@@ -2036,9 +2177,59 @@ function showHistory() {
   const rows = state.history
     .slice()
     .reverse()
-    .map((item) => `<div class="history-line"><strong>${item.speaker}</strong><br>${item.text}</div>`)
+    .map((item) => `<div class="history-line"><strong>${escapeHtml(item.speaker)}</strong><br>${escapeHtml(item.text)}</div>`)
     .join("");
   showModal("历史", rows || "<p>暂无历史。</p>");
+}
+
+function escapeHtml(value) {
+  return String(value ?? "")
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#39;");
+}
+
+function summarizeNode(id) {
+  const node = story[id];
+  if (!node) return id;
+  const chapter = node.chapter ? `${node.chapter} · ` : "";
+  const speaker = node.speaker && node.speaker !== "旁白" ? `${node.speaker}：` : "";
+  const text = node.text ? node.text.slice(0, 26) : "选择";
+  return `${chapter}${speaker}${text}`;
+}
+
+function firstBranchAfter(id) {
+  let cursor = id;
+  const seen = new Set();
+  while (cursor && story[cursor] && !story[cursor].choices && !seen.has(cursor)) {
+    seen.add(cursor);
+    if (!story[cursor].next) break;
+    cursor = story[cursor].next;
+  }
+  return cursor;
+}
+
+function branchTreeHtml(id = "start", depth = 0, visited = new Set()) {
+  const branchId = firstBranchAfter(id);
+  if (!branchId || !story[branchId] || visited.has(branchId)) return "";
+  visited.add(branchId);
+  const node = story[branchId];
+  const currentClass = branchId === state.node ? " current" : "";
+  const readClass = readNodes.has(branchId) ? " read" : "";
+  const choices = (node.choices ?? [])
+    .map((choice) => {
+      const nextLabel = summarizeNode(choice.next);
+      const child = branchTreeHtml(choice.next, depth + 1, new Set(visited));
+      return `<li><span class="branch-choice">${escapeHtml(choice.label)}</span><span class="branch-next">${escapeHtml(nextLabel)}</span>${child}</li>`;
+    })
+    .join("");
+  return `<ol class="branch-level depth-${depth}"><li><div class="branch-node${currentClass}${readClass}">${escapeHtml(summarizeNode(branchId))}</div><ol>${choices}</ol></li></ol>`;
+}
+
+function showBranchMap() {
+  showModal("分支图", `<div class="branch-map">${branchTreeHtml() || "<p>暂无分支。</p>"}</div>`);
 }
 
 function showSettings() {
@@ -2067,19 +2258,57 @@ function shouldIgnoreStageAdvance(event) {
 
 dom.start.addEventListener("click", () => startGame(false));
 dom.continue.addEventListener("click", () => startGame(true));
-dom.dialogue.addEventListener("click", next);
+dom.dialogue.addEventListener("click", (event) => {
+  if (!shouldIgnoreStageAdvance(event)) next();
+});
 dom.dialogue.addEventListener("keydown", (event) => {
   if (event.key === "Enter" || event.key === " ") next();
 });
 dom.history.addEventListener("click", showHistory);
+dom.inlineHistory.addEventListener("click", showHistory);
+dom.auto.addEventListener("click", () => {
+  setAutoMode(!autoMode);
+  if (autoMode && !typing) continueManagedAdvance();
+});
+dom.skip.addEventListener("click", () => {
+  setSkipMode(!skipMode);
+  if (skipMode) {
+    if (typing) finishTyping();
+    continueManagedAdvance();
+  }
+});
+dom.map.addEventListener("click", showBranchMap);
 dom.save.addEventListener("click", () => saveGame(true));
 dom.load.addEventListener("click", () => loadGame(true));
+dom.quickSave.addEventListener("click", quickSave);
+dom.quickLoad.addEventListener("click", quickLoad);
 dom.settings.addEventListener("click", showSettings);
+dom.inlineSettings.addEventListener("click", showSettings);
 dom.stage.addEventListener("click", (event) => {
   if (!shouldIgnoreStageAdvance(event) && !event.target.closest(".dialogue")) next();
 });
+dom.stage.addEventListener(
+  "wheel",
+  (event) => {
+    if (event.deltaY < 0 && !dom.modal.open) {
+      event.preventDefault();
+      showHistory();
+    }
+  },
+  { passive: false },
+);
 window.addEventListener("keydown", (event) => {
   if (event.key === "Escape" && dom.modal.open) dom.modal.close();
+  if (event.key === "F5") {
+    event.preventDefault();
+    quickSave();
+    return;
+  }
+  if (event.key === "F9") {
+    event.preventDefault();
+    quickLoad();
+    return;
+  }
   if ((event.key === "Enter" || event.key === " ") && !dom.modal.open) next();
 });
 
